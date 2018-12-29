@@ -22,6 +22,8 @@
     "node": ">=9.0.0"
   },
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
     "express": "5.0.0-alpha.2",
     "fs": "^0.0.1-security",
     "http2": "^3.3.7",

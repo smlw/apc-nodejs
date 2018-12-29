@@ -2,11 +2,14 @@ const spdy = require('spdy');
 const express = require('express');
 const path = require('path');
 const fs = require('fs'); 
+const bodyParser = require('body-parser');
 
 const app = express();
+app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/', (req, res) => {
-    res.send('ok');
+    res.render('index')
 });
 
 spdy
