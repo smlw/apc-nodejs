@@ -9,6 +9,11 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
+const AdapterMongoDB = require('./adapters/mongodb');
+AdapterMongoDB.schema
+    .on('connected', function() {
+        console.log('Connect to DataBase')
+    })
 
 // ROUTERS
 const routes = require('./routes');

@@ -1,11 +1,6 @@
-var Schema = require('jugglingdb').Schema;
-var schema = new Schema('mongodb', {
-    url: 'mongodb://localhost:27017/apc',
-    w:1,
-    j:1
-});
+const adapterMongoDB = require('../adapters/mongodb')
 
-const Apps = schema.define('Apps', {
+const Apps = adapterMongoDB.schema.define('Apps', {
     owner:      { type: String, required: true},
     uri:        { type: String, required: true},
     dbType:     { type: String, required: true},
