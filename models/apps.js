@@ -1,7 +1,12 @@
 var Schema = require('jugglingdb').Schema;
-
 var schema = new Schema('mongodb', {
-    owner:      { type: Schema.Types.ObjectId, required: true},
+    url: 'mongodb://localhost:27017/apc',
+    w:1,
+    j:1
+});
+
+const Apps = schema.define('Apps', {
+    owner:      { type: String, required: true},
     uri:        { type: String, required: true},
     dbType:     { type: String, required: true},
     dbUser:     { type: String, required: true},
@@ -9,11 +14,8 @@ var schema = new Schema('mongodb', {
     dbTable:    { type: String, required: true},
     dbUrl:      { type: String, required: true},
     isActive:   { type: Boolean},
-    port:       { type: Integer},
-}, {
-    timestamps: true
+    port:       { type: Number},
+    createAt:   { type: Date, default: Date.now}
 });
 
-schema.set('toJSON', {virtuals: true});
-
-module.exports('Apps', schema);
+module.exports = ('Apps', Apps);
