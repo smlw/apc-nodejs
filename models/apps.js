@@ -1,4 +1,4 @@
-const adapterMongoDB = require('../adapters/mongodb')
+const adapterMongoDB = require('../adapters/mongodb');
 
 const Apps = adapterMongoDB.schema.define('Apps', {
     owner:      { type: String, required: true},
@@ -8,7 +8,7 @@ const Apps = adapterMongoDB.schema.define('Apps', {
     dbPassword: { type: String, required: true},
     dbTable:    { type: String, required: true},
     dbUrl:      { type: String, required: true},
-    isActive:   { type: Boolean},
+    isActive:   { type: Boolean, default: false},
     port:       { type: Number},
     createAt:   { type: Date, default: Date.now}
 });
