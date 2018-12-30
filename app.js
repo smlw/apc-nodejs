@@ -9,12 +9,6 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 
-const AdapterMongoDB = require('./adapters/mongodb');
-AdapterMongoDB.schema
-    .on('connected', function() {
-        console.log('Connect to DataBase')
-    })
-
 // ROUTERS
 const routes = require('./routes');
 app.use('/app/add', routes.addApp);
@@ -38,3 +32,13 @@ spdy
         console.log('Listening on port: ' + 8000 + '.');
         /* eslint-enable no-console */
     });
+
+    
+const AdapterMongoDB = require('./adapters/mongodb');
+AdapterMongoDB.schema
+    .on('connected', function() {
+        console.log('Connect to DataBase')
+    })
+    .on('log', function(msg, duration) {
+        console.log(msg);
+    })
