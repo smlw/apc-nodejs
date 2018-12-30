@@ -1,13 +1,15 @@
 const spdy = require('spdy');
 const express = require('express');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 const bodyParser = require('body-parser');
 
 
 const app = express();
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 // ROUTERS
 const routes = require('./routes');
@@ -33,12 +35,20 @@ spdy
         /* eslint-enable no-console */
     });
 
-    
-const AdapterMongoDB = require('./adapters/mongodb');
-AdapterMongoDB.schema
-    .on('connected', function() {
-        console.log('Connect to DataBase')
-    })
-    .on('log', function(msg, duration) {
-        console.log(msg);
-    })
+
+// const AdapterMongoDB = require('./adapters/mongodb');
+
+// AdapterMongoDB.schema
+// .on('connected', function() {
+//     console.log('Connect to DataBase')
+// })
+// .on('log', function(msg, duration) {
+//     console.log(msg);
+// })
+
+// AdapterMongoDB.schema.disconnectt;
+
+const adapterMongoDB = require('./adapters/mongodb');
+
+
+// adapterMongoDB.mongo().getConnection()
