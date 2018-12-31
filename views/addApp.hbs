@@ -1,0 +1,28 @@
+
+{{#content "title"}}
+    Добавить приложение
+{{/content}}
+
+{{#content "styles"}}
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/register-app/register.css' }}">
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/components/components.css' }}">
+{{/content}}
+
+{{#content "content"}}
+    <div class="col-12">
+        <div class="container register-app">
+            <div class="row">
+                {{> chunks/register-app/register-app-content}}
+            </div>
+        </div>
+    </div>
+
+    {{#content "scripts"}}
+        <script type="text/javascript" src="/javascripts/partials/libs/bs-stepper.min.js"></script>
+        <script type="text/javascript" src="/javascripts/viewRegisterApp.js"></script>
+        <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/javascripts/handlers/registerApp/register-app.js"></script>
+        <script type="text/javascript" src="/javascripts/handlers/registerApp/form.validate.js"></script>
+        <script type="text/javascript" src="/javascripts/tab.js"></script>
+    {{/content}} 
+{{/content}}
