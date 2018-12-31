@@ -1,0 +1,5 @@
+.benefits{
+    @include breakpoint(phablet){
+        margin: 60px 0;
+    }
+}

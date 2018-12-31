@@ -6,17 +6,18 @@
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "gulp & nodemon app.js"
   },
   "devDependencies": {
     "eslint": "^5.3.0",
     "eslint-plugin-node": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-cssnano": "^2.1.3",
-    "gulp-nodemon": "^2.2.1",
+    "gulp-minify-css": "^2.1.3",
+    "gulp-nodemon": "^2.4.2",
     "gulp-plumber": "^1.2.0",
     "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.0",
     "nodemon": "^1.18.9"
   },
   "engines": {
@@ -24,10 +25,12 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "bootstrap": "^4.2.1",
     "ejs": "^2.6.1",
     "express": "5.0.0-alpha.2",
     "fs": "^0.0.1-security",
     "http2": "^3.3.7",
+    "jquery": "^3.3.1",
     "jugglingdb": "^2.0.0-rc8",
     "jugglingdb-mongodb": "^0.2.0",
     "spdy": "^4.0.0"

@@ -1,0 +1,61 @@
+.step {
+    position: relative;
+    min-height: 1em;
+    color: gray;
+    + .step {
+      margin-top: 1em;
+    }
+    > div {
+      &:first-child {
+        position: static;
+        height: 0;
+      }
+      &:not(:first-child) {
+        margin-left: 1.5em;
+        padding-left: 1em;
+      }
+    }
+    &.step-active {
+      color: #4285f4;
+      .circle {
+        background-color: #0062CC;
+      }
+      .caption{
+        color: gray;
+      }
+    }
+  }
+  
+  /* Circle */
+  
+  .circle {
+    background: gray;
+    position: relative;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 0 0 3px #fff;
+  }
+  
+  /* Vertical Line */
+  
+  .step:last-child .circle:after {
+    display: none;
+  }
+  
+  /* Stepper Titles */
+  
+  .title {
+    line-height: 1.5em;
+    font-weight: bold;
+  }
+  
+  .caption {
+    font-size: 0.8em;
+    border-left: 1px solid #ccc;
+    padding: 0 0 0 30px;
+    margin: 10px 0 10px -30px;
+  }
