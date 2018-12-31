@@ -24,11 +24,14 @@ const hbs = expressHbs.create({
 
 hbs.handlebars.registerHelper(layouts(hbs.handlebars));
 
+// SET & USES
 app.engine("hbs", hbs.engine)
 app.set("view engine", "hbs");
 app.set('views', __dirname + '/views');
-
-// SET & USES
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/js/dist'));
 
 app.use(express.static('public'));
 
