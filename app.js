@@ -36,19 +36,12 @@ spdy
     });
 
 
-// const AdapterMongoDB = require('./adapters/mongodb');
+const AdapterMongoDB = require('./adapters/mongodb');
 
-// AdapterMongoDB.schema
-// .on('connected', function() {
-//     console.log('Connect to DataBase')
-// })
-// .on('log', function(msg, duration) {
-//     console.log(msg);
-// })
-
-// AdapterMongoDB.schema.disconnectt;
-
-const adapterMongoDB = require('./adapters/mongodb');
-
-
-// adapterMongoDB.mongo().getConnection()
+AdapterMongoDB.schema
+.on('connected', function() {
+    console.log('Connect to DataBase')
+})
+.on('log', function(msg, duration) {
+    console.log(msg);
+})

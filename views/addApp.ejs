@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Add site
+</title>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/main.css"/></head>
+<body>
+
+<div class="main-content--wrap">
+
+    <header class="header">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">APC</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+         
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Подключить сайт</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Настройки сайтов</a>
+              </li>
+            </ul>
+            <a class="nav-link" href="/user/nickname">nickname</a>
+            <a class="btn btn-primary btn-sm active" href="/logout" role="button">Выйти</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="content"><!-- dynamic content of every page -->
+
+            <div class="col-12">
+        <div class="container register-app">
+            <div class="row">
+                <h1 class="display-6 container-header">Регистрация Вашего приложения</h1>
+                <div id="stepper1" class="bs-stepper linear">
+                    <div class="bs-stepper-header" role="tablist">
+                        <div class="step active" data-target="#test-l-1">
+                            <button type="button" class="btn btn-link step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1"
+                                aria-selected="true">
+                                <span class="bs-stepper-circle">1</span>
+                                <span class="bs-stepper-label">Регистрация сайта</span>
+                            </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#test-l-2">
+                            <button type="button" class="btn btn-link step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2"
+                                aria-selected="false" disabled="disabled">
+                                <span class="bs-stepper-circle">2</span>
+                                <span class="bs-stepper-label">Подтверждение</span>
+                            </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#test-l-3">
+                            <button type="button" class="btn btn-link step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
+                                aria-selected="false" disabled="disabled">
+                                <span class="bs-stepper-circle">3</span>
+                                <span class="bs-stepper-label">База данных</span>
+                            </button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="step" data-target="#test-l-4">
+                            <button type="button" class="btn btn-link step-trigger" role="tab" id="stepper1trigger4" aria-controls="test-l-3"
+                                aria-selected="false" disabled="disabled">
+                                <span class="bs-stepper-circle">4</span>
+                                <span class="bs-stepper-label">Готово</span>
+                            </button>
+                        </div>
+                    </div>    <div class="bs-stepper-content" id="regAppForm">
+                        <form onsubmit="return false" id="register-app_form">
+                            <div id="test-l-1" role="tabpanel" class="content active" aria-labelledby="stepper1trigger1">
+                                <h2>Зарегистрировать сайт</h2>
+                                <div class="form-group">
+                                    <label for="url">Ссылка на сайт</label>
+                                    http://test.ru
+                                    <input type="url" name="formDomainName" class="form-control" id="formDomainName" placeholder="http://domainname.ru">
+                                    <div class="box-messages"></div>
+                                    <div class="result-message-1"> </div>
+                                </div>
+                                <div class="btn-contolls d-flex justify-content-start">
+                                    <button class="btn btn-primary btnCheckDomainName" data-action="checkDomainName">Отправить</button>
+                                    <button type="submit" class="btn btn-success btn-next res-step-1 d-none">Далее</button>
+                                </div>            </div>
+                            <div id="test-l-2" role="tabpanel" class="content" aria-labelledby="stepper1trigger2">
+                                <h2>Подтверждение прав на <a href="http://domain-name.ru">http://domain-name.ru</a></h2>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-toggle="tab" href="#item_1">Мета-тег</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#item_2">HTML-файл</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" data-toggle="tab" href="#item_3">JSON-файл</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div id="item_1" class="tab-pane active"><br>
+                                        <p>Добавьте в код главной страницы вашего сайта (в раздел head) мета-тег:</p>
+                                        <blockquote class="blockquote">
+                                            <code>&lt;meta name="yandex-verification" content="26773ea554023e11" /&gt;</code>
+                                        </blockquote>
+                                        <p>Зайдите на главную страницу сайта и убедитесь, что мета-тег появился в html-коде страницы. В
+                                            большинстве браузеров это можно сделать выбрав пункт «Исходный код страницы» в контекстном
+                                            меню. На некоторых сайтах обновление мета-тегов может занимать несколько минут!
+                                            Нажмите кнопку «Проверить» после того, как мета-тег появится.</p>
+                                    </div>
+                                    <div id="item_2" class="tab-pane fade"><br>
+                                        <p>В корне сайта создайте файл с именем <a href="#">yandex_26773ea554023e11.html</a> и со следующим содержимым:</p>
+                                        <blockquote class="blockquote">
+                                            <code>
+                                                &lt;html&gt;
+                                                &lt;head&gt;
+                                                &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+                                                &lt;/head&gt;
+                                                &lt;body&gt;Verification: 26773ea554023e11&lt;/body&gt;
+                                                &lt;/html&gt;
+                                            </code>
+                                        </blockquote>
+                                        <p>Убедитесь, что файл по адресу <a href="http://www.apc.ru/yandex_26773ea554023e11.html ">http://www.apc.ru/yandex_26773ea554023e11.html
+                                            </a> открывается</p>
+                                    </div>
+                                    <div id="item_3" class="tab-pane fade"><br>
+                                        <p>В корне сайта создайте файл с именем yandex_26773ea554023e11.json и со следующим содержимым:</p>
+                                        <blockquote class="blockquote">
+                                            <code>
+                                                {
+                                                "domain": "http://apc.ru",
+                                                "secret": "random string"
+                                                }
+                                            </code>
+                                        </blockquote>
+                                        <p>Убедитесь, что файл по адресу <a href="http://www.apc.ru/yandex_26773ea554023e11.json ">http://www.apc.ru/yandex_26773ea554023e11.json
+                                            </a> открывается</p>
+                                    </div>
+                                    <div class="result-message-2"> </div>
+                                </div>
+                                <div class="btn-contolls d-flex justify-content-start">
+                                    <button type="submit" class="btn btn-secondary btn-prev">Назад</button>
+                                    <button class="btn btn-primary btnCheckRights" data-action="checkRights">Проверить</button>
+                                    <button type="submit" class="btn btn-success btn-next res-step-2 d-none">Далее</button>
+                                </div>
+                            </div>
+                            <div id="test-l-3" role="tabpanel" class="content" aria-labelledby="stepper1trigger3">
+                                <h2>Данные от БД</h2>
+                                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse perferendis amet distinctio asperiores
+                                    eum dolores. Facilis, ad culpa! Neque culpa minus, sequi ad eaque voluptas rerum recusandae hic optio
+                                    similique.</p>
+                                
+                                <div class="step_3">
+                                    <div class="form-group">
+                                        <label for="inputAddress">Host</label>
+                                        <input class="form-control" type="text" placeholder="http://domainname.ru" readonly>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="step_3-user">DB User</label>
+                                            <input type="text" class="form-control" id="step_3-user" name="step_3-user" placeholder="User">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="step_3-password">DB Password</label>
+                                            <input type="password" class="form-control" id="step_3-password" name="step_3-password" placeholder="Password">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="step_3-table-name">Имя таблицы с пользователями</label>
+                                            <input type="text" class="form-control" id="step_3-table-name" name="step_3-table-name" placeholder="users_table" >
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="step_3-db-port">Порт</label>
+                                            <input type="text" class="form-control" id="step_3-port" name="step_3-db-port" placeholder="8000" >
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="step_3-db-type">DB type</label>
+                                            <select id="step_3-db-type" name="step_3-db-type" class="form-control">
+                                                <option disabled selected="selected">Не выбрано</option>
+                                                <option value="Mysql">Mysql</option>
+                                                <option value="Mssql">Mssql</option>
+                                                <option value="MongoDB">MongoDB</option>
+                                                <option value="PostgreSQL">PostgreSQL</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="result-message-3"> </div>
+                                    <div class="btn-contolls d-flex justify-content-start">
+                                        <button type="submit" class="btn btn-secondary btn-prev">Назад</button>
+                                        <button class="btn btn-primary btncheckDBData" data-action="checkDBData">Тест соединения</button>
+                                        <button type="submit" class="btn btn-success btn-next res-step-3 d-none">Далее</button>
+                                    </div>
+                                    
+                                </div>            </div>
+                            <div id="test-l-4" role="tabpanel" class="content" aria-labelledby="stepper1trigger4">
+                                <div class="alert text-center" role="alert">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-checked">
+                                            <use xlink:href="img/svg/sprite.svg#si-glyph-checked" />
+                                        </svg>
+                                    <h4 class="alert-heading">Почти все готово!</h4>
+                                    <p>Вы успешно зарегистрировали Ваше приложение. Осталось выполнить настройки на стороне Вашего приложения. </p>
+                                    <hr>
+                                    <p class="mb-0">Перейти в <a href="#">настройки</a> или открыть <a href="#">Документацию</a></p>
+                                </div>            </div>
+                        </form>
+                    </div>
+                </div>            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    <footer class="border-top">
+        <h4> <a href="https://apc.ru">https://apc.ru</a> © 2018 all rights reserved</h4>
+    </footer></div>
+
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+</body>
+</html>

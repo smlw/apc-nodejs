@@ -3,18 +3,30 @@ const router = express.Router();
 const models = require('../models');
 const AdapterMongoDB = require('../adapters/mongodb');
 
-router.get('/', async (req, res, next) => {
+router.get('/', (req, res) => {
+    res.render('addApp');
+});
+
+router.post('/', async (req, res, next) => {
+
+    const owner         =   req.body.owner.trim();
+    const uri           =   req.body.uri.trim();
+    const dbType        =   req.body.dbType.trim();
+    const dbUser        =   req.body.dbUser.trim();
+    const dbPassword    =   req.body.dbPassword.trim();
+    const dbTable       =   req.body.dbTable.trim();
+    const dbUrl         =   req.body.dbUrl.trim();
+    const port          =   req.body.owner.trim();
 
     const appData = {
-        owner: 'smlw',
-        uri: 'http://test.ru',
-        dbType: 'mongodb',
-        dbUser: 'dbUser',
-        dbPassword: 'adq134r324wfg134r',
-        dbTable: 'tablename',
-        dbUrl: 'mongoDB://test.ru',
-        isActive: true,
-        port: '',
+        owner,
+        uri,
+        dbType,
+        dbUser,
+        dbPassword,
+        dbTable,
+        dbUrl,
+        port
     };
 
     if(!appData.owner || !appData.uri || !appData.dbType || !appData.dbUser || !appData.dbPassword || !appData.dbTable || !appData.dbUrl){
@@ -23,7 +35,7 @@ router.get('/', async (req, res, next) => {
             message: 'Заполните все необходимые поля!'
         });
     } else {
-        const App = await models.Apps.create(appData, (err, appInfo) => {
+        await models.Apps.create(appData, (err, appInfo) => {
             console.log(err);
             console.log(appInfo)
         });
@@ -34,8 +46,6 @@ router.get('/', async (req, res, next) => {
             appData
         });
     }
-
-
 })
 
 module.exports = router;
