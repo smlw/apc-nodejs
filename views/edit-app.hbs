@@ -1,0 +1,17 @@
+{{#extend "layouts/base"}}
+
+{{#content "title"}}
+Настройки приложения appName
+{{/content}}
+
+{{#content "content"}}
+    {{#extend "layouts/lk-layout"}}
+        {{#content "lk-menu"}}
+            {{> chunks/edit-app/edit-menu}}
+        {{/content}}
+        {{#content "lk-content"}}
+            {{> chunks/edit-app/edit-content}}
+        {{/content}}
+    {{/extend}}
+{{/content}}
+{{/extend}}

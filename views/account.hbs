@@ -1,0 +1,17 @@
+{{#extend "layouts/base"}}
+
+{{#content "title"}}
+Account page
+{{/content}}
+
+{{#content "content"}}
+    {{#extend "layouts/lk-layout"}}
+        {{#content "lk-menu"}}
+            {{> chunks/account/acc-menu}}
+        {{/content}}
+        {{#content "lk-content"}}
+            {{> chunks/account/acc-content}}
+        {{/content}}
+    {{/extend}}
+{{/content}}
+{{/extend}}

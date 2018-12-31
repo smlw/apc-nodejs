@@ -1,0 +1,60 @@
+<h2>Подтверждение прав на <a href="http://domain-name.ru">http://domain-name.ru</a></h2>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#item_1">Мета-тег</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#item_2">HTML-файл</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#item_3">JSON-файл</a>
+    </li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+    <div id="item_1" class="tab-pane active"><br>
+        <p>Добавьте в код главной страницы вашего сайта (в раздел head) мета-тег:</p>
+        <blockquote class="blockquote">
+            <code>&lt;meta name="yandex-verification" content="26773ea554023e11" /&gt;</code>
+        </blockquote>
+        <p>Зайдите на главную страницу сайта и убедитесь, что мета-тег появился в html-коде страницы. В
+            большинстве браузеров это можно сделать выбрав пункт «Исходный код страницы» в контекстном
+            меню. На некоторых сайтах обновление мета-тегов может занимать несколько минут!
+            Нажмите кнопку «Проверить» после того, как мета-тег появится.</p>
+    </div>
+    <div id="item_2" class="tab-pane fade"><br>
+        <p>В корне сайта создайте файл с именем <a href="#">yandex_26773ea554023e11.html</a> и со следующим содержимым:</p>
+        <blockquote class="blockquote">
+            <code>
+                &lt;html&gt;
+                &lt;head&gt;
+                &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+                &lt;/head&gt;
+                &lt;body&gt;Verification: 26773ea554023e11&lt;/body&gt;
+                &lt;/html&gt;
+            </code>
+        </blockquote>
+        <p>Убедитесь, что файл по адресу <a href="http://www.apc.ru/yandex_26773ea554023e11.html ">http://www.apc.ru/yandex_26773ea554023e11.html
+            </a> открывается</p>
+    </div>
+    <div id="item_3" class="tab-pane fade"><br>
+        <p>В корне сайта создайте файл с именем yandex_26773ea554023e11.json и со следующим содержимым:</p>
+        <blockquote class="blockquote">
+            <code>
+                {
+                "domain": "http://apc.ru",
+                "secret": "random string"
+                }
+            </code>
+        </blockquote>
+        <p>Убедитесь, что файл по адресу <a href="http://www.apc.ru/yandex_26773ea554023e11.json ">http://www.apc.ru/yandex_26773ea554023e11.json
+            </a> открывается</p>
+    </div>
+    <div class="result-message-2"> </div>
+</div>
+<div class="btn-contolls d-flex justify-content-start">
+    <button type="submit" class="btn btn-secondary btn-prev">Назад</button>
+    <button class="btn btn-primary btnCheckRights" data-action="checkRights">Проверить</button>
+    <button type="submit" class="btn btn-success btn-next res-step-2 d-none">Далее</button>
+</div>

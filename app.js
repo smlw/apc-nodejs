@@ -4,9 +4,35 @@ const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 
+const expressHbs = require("express-handlebars");
+const layouts = require('express-handlebars-layouts');
+const handlebarsStatic = require('handlebars-static');
 
 const app = express();
-app.set('view engine', 'ejs');
+
+// VIEW ENGINE
+const staticUrl = '/';
+const hbs = expressHbs.create({
+    layoutsDir: "views/layouts", 
+    partialsDir: "views/partials",
+    defaultLayout: "base",
+    extname: "hbs",
+    helpers: {
+        static: handlebarsStatic(staticUrl)
+    }
+});
+
+hbs.handlebars.registerHelper(layouts(hbs.handlebars));
+
+app.engine("hbs", hbs.engine)
+app.set("view engine", "hbs");
+app.set('views', __dirname + '/views');
+
+// SET & USES
+
+app.use(express.static('public'));
+
+// BODYPARSER
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -16,10 +42,10 @@ const routes = require('./routes');
 app.use('/app/add', routes.addApp);
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render("index")
 });
 
-
+// SERVER
 spdy
     .createServer({
         key: fs.readFileSync(path.resolve(__dirname, './certs/privateKey.key')),
@@ -35,6 +61,8 @@ spdy
         /* eslint-enable no-console */
     });
 
+
+// DATABASE
 
 const AdapterMongoDB = require('./adapters/mongodb');
 
