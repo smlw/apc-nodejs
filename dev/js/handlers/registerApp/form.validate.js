@@ -89,18 +89,27 @@ function regApp(elem) {
             url: registerApp.getAppObject().domainName,
             secretKey: registerApp.getAppObject().secretKey
         };
-
-        registerApp.setRights();
-        console.log(registerApp.getAppObject())
         
-        var rightsFlag = registerApp.getAppObject().checkRights;
-        if(rightsFlag){
-            $('.result-message-2').append('<span class="text-success">OK</span>');
-            $('.btn-contolls').find('.btnCheckRights').addClass('d-none');
-            $('.btn-contolls').find('.res-step-2').addClass('d-block');
-        }
-
-        // Тут обработчик и запрос на сервер    
+        // Тут обработчик и запрос на сервер
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: '/app/add/rights'
+        }).done(function (data) {
+            console.log(data);
+            if (!data.ok) {
+                $('.result-message-2').append('<span class="text-danger">Ошибка</span>');
+                console.log(data.error)
+            } else {
+                registerApp.setRights();
+                $('.result-message-2').append('<span class="text-success">OK</span>');
+                $('.btn-contolls').find('.btnCheckRights').addClass('d-none');
+                $('.btn-contolls').find('.res-step-2').addClass('d-block');
+                console.log(registerApp.getAppObject());
+                console.log(data.ok);
+            }
+        });
     };
 
     this.checkDBData = function () {

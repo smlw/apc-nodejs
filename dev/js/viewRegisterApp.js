@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
     var stepper = new Stepper(document.querySelector('.bs-stepper'));
 
     $('.btn-prev').on("click", function () {

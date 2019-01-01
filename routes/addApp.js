@@ -7,6 +7,17 @@ router.get('/', (req, res) => {
     res.render('addApp');
 });
 
+router.post('/rights', (req, res) => {
+    const url = req.body.url.trim();
+    const secretKey = req.body.secretKey.trim();
+
+    res.json({
+        ok: true,
+        url,
+        secretKey
+    });
+});
+
 router.post('/', async (req, res, next) => {
 
     const owner         =   req.body.owner.trim();

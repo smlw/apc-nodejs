@@ -37,9 +37,8 @@ app.use('/javascripts', express.static(__dirname + '/node_modules/jquery-validat
 app.use(express.static('public'));
 
 // BODYPARSER
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // ROUTERS
 const routes = require('./routes');

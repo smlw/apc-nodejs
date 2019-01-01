@@ -1,0 +1,13 @@
+.progress {
+    display: block;
+    text-align: center;
+    width: 0;
+    height: 3px;
+    background: $primary-color;
+    transition: width .3s;
+    position: fixed;
+}
+.progress.hide {
+    opacity: 0;
+    transition: opacity 1.3s;
+}
