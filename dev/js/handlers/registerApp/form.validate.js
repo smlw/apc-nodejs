@@ -77,7 +77,7 @@ function regApp(elem) {
             registerApp.setDomainName(inputVal);
             $('.btn-contolls').find('.res-step-1').addClass('d-block');
             $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
-            $('.result-message-1').append('<span class="text-success">OK</span>');
+            $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>Url сохранен! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             console.log(registerApp.getAppObject())
         } else {
             $('.btn-contolls').find('.res-step-1').removeClass('d-block');
@@ -97,17 +97,19 @@ function regApp(elem) {
             contentType: 'application/json',
             url: '/app/add/rights'
         }).done(function (data) {
-            console.log(data);
             if (!data.ok) {
-                $('.result-message-2').append('<span class="text-danger">Ошибка</span>');
-                console.log(data.error)
+                // $('#test-l-2').append('<span class="text-danger">'+ data.msg +'</span>');
+                $('#test-l-2').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>'+ data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+
+                
+                console.log(data);
             } else {
                 registerApp.setRights();
-                $('.result-message-2').append('<span class="text-success">OK</span>');
+                $('#test-l-2').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+ data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('.btn-contolls').find('.btnCheckRights').addClass('d-none');
                 $('.btn-contolls').find('.res-step-2').addClass('d-block');
                 console.log(registerApp.getAppObject());
-                console.log(data.ok);
+                console.log(data);
             }
         });
     };

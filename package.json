@@ -39,6 +39,7 @@
     "jquery-validation": "^1.19.0",
     "jugglingdb": "^2.0.0-rc8",
     "jugglingdb-mongodb": "^0.2.0",
+    "request": "^2.88.0",
     "spdy": "^4.0.0"
   }
 }
