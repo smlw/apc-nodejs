@@ -9,6 +9,58 @@ router.get('/', (req, res) => {
     res.render('addApp');
 });
 
+//CHECK DB CONNECTION
+router.post('/db', async (req, res) => {
+    const host = req.body.host.trim();
+    const user = req.body.user.trim();
+    const password = req.body.password.trim();
+    const tableName = req.body.tableName.trim();
+    const port = req.body.port.trim() || '';
+    const type = req.body.dbType.trim();
+
+    try {
+        var Schema = require('jugglingdb').Schema;
+        var schema = new Schema('mysql', {
+            host: host,
+            username: user,
+            password: password,
+            tableName : tableName,
+            database: 'joomladb',
+            port: port
+        });
+        
+        // console.log("teest " + schema.connection.connect.code)
+        schema
+        .on('connected', function () {
+            console.log('im connected');
+                // schema.client.query(`SELECT * FROM ${schema.settings.tableName}`, function(err, data){
+                //     console.log(err)
+                //     if(err){
+                //         res.json({
+                //             ok: false,
+                //             msg: err.code
+                //         })
+                //         schema.disconnect();
+                //     } else {
+                //         res.json({
+                //             ok: true,
+                //             msg: 'Проверка пройдена'
+                //         })
+                //     }
+                // });
+            })
+            .on('disconnected', function () {
+                console.log('im DISconnected'); 
+            })
+    } catch (error) {
+        if (error) {
+            res.json({
+                ok: false,
+                msg: 'Ошибка. Проверьте правильность введенных данных'
+            })
+        }
+    }
+});
 
 // CHECK RIGHTS 
 router.post('/rights', async (req, res) => {
@@ -22,7 +74,7 @@ router.post('/rights', async (req, res) => {
                 // const metaVerify = $("meta[name='apc-verification']").attr("content");
                 const metaVerify = $("meta[http-equiv='content-type']").attr("content");
 
-                if(metaVerify){
+                if (metaVerify) {
                     res.json({
                         ok: true,
                         msg: 'Успех',
@@ -38,14 +90,19 @@ router.post('/rights', async (req, res) => {
             } else {
                 res.json({
                     ok: false,
-                    msg:  'Ошибка',
+                    msg: 'Ошибка',
                 });
             }
 
         });
     } catch (error) {
-        if(error.code === 503){
-            console.log()
+        if (error) {
+            res.json({
+                ok: false,
+                msg: 'Ошибка проверки. Попробуйте позже.'
+            })
+        }
+        if (error.code === 503) {
             res.json({
                 ok: false,
                 msg: 'Ошибка 503'

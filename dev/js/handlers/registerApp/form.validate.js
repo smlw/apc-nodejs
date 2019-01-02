@@ -130,23 +130,38 @@ function regApp(elem) {
         var port = $(inputs.DBData.port).val();
         var dbType = $(inputs.DBData.dbType).val();
 
-        var data = {
+        var DBdata = {
             host: host,
             user: user,
             password: password,
             tableName: tableName,
-            port: port || '',
-            DBtype: dbType
+            port: port,
+            dbType: dbType
         }
 
-        registerApp.setDBData(data.host, data.user, data.password, data.port, data.tableName, data.DBtype);
-        $('.result-message-3').append('<span class="text-success">OK</span>');
-        $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
-        $('.btn-contolls').find('.res-step-3').addClass('d-block');
+        console.log(DBdata)
+        // Тут обработчик и запрос на сервер
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(DBdata),
+            contentType: 'application/json',
+            url: '/app/add/db'
+        }).done(function (data) {
+            if (!data.ok) {
+                $('#test-l-3').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>'+ data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');         
+                console.log(data);
+            } else {
+                registerApp.setDBData(DBdata.host, DBdata.user, DBdata.password, DBdata.port, DBdata.tableName, DBdata.dbType);
+                $('#test-l-3').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+ data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
+                $('.btn-contolls').find('.res-step-3').addClass('d-block');
+                console.log(registerApp.getAppObject());
+                console.log(data);
+            }
+        });
+
 
         console.log(registerApp.getAppObject())
-
-        // Тут обработчик и запрос на сервер
     };
 
     var self = this;
