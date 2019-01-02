@@ -16,6 +16,10 @@ function regApp(elem) {
                 minlength: 6
                 // domain: true
             },
+            "step_3-host": {
+                required: true,
+                minlength: 4
+            },
             "step_3-user": {
                 required: true,
                 minlength: 4
@@ -40,6 +44,9 @@ function regApp(elem) {
                 required: "Пожалуйста, введите ссылку на ресурс вида http://domainname.ru/",
                 url: 'Пожалуйста, введите корректный адрес'
             },
+            "step_3-host": {
+                required: "Хост базы данных",
+            },
             "step_3-user": {
                 required: "Пользователь базы данных",
             },
@@ -62,6 +69,7 @@ function regApp(elem) {
     var inputs = {
         domainName: '#formDomainName',
         DBData: {
+            host: '#step_3-host',
             user: '#step_3-user',
             password: '#step_3-password',
             tableName: '#step_3-table-name',
@@ -115,6 +123,7 @@ function regApp(elem) {
     };
 
     this.checkDBData = function () {
+        var host = $(inputs.DBData.host).val();
         var user = $(inputs.DBData.user).val();
         var password = $(inputs.DBData.password).val();
         var tableName = $(inputs.DBData.tableName).val();
@@ -122,6 +131,7 @@ function regApp(elem) {
         var dbType = $(inputs.DBData.dbType).val();
 
         var data = {
+            host: host,
             user: user,
             password: password,
             tableName: tableName,
@@ -129,7 +139,7 @@ function regApp(elem) {
             DBtype: dbType
         }
 
-        registerApp.setDBData(data.user, data.password, data.port, data.tableName, data.DBtype);
+        registerApp.setDBData(data.host, data.user, data.password, data.port, data.tableName, data.DBtype);
         $('.result-message-3').append('<span class="text-success">OK</span>');
         $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
         $('.btn-contolls').find('.res-step-3').addClass('d-block');
