@@ -1,7 +1,10 @@
-{{#extend "layouts/base"}}
 
 {{#content "title"}}
-Account page
+    Аккаунт
+{{/content}}
+{{#content "styles"}}
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/account/account.css' }}">
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/components/components.css' }}">
 {{/content}}
 
 {{#content "content"}}
@@ -14,4 +17,10 @@ Account page
         {{/content}}
     {{/extend}}
 {{/content}}
-{{/extend}}
+{{#content "scripts"}}
+    <script type="text/javascript" src="/javascripts/viewAccountSettings.js"></script>
+    <script type="text/javascript" src="/javascripts/umd/popper.js"></script>
+    <script type="text/javascript" src="/javascripts/dropdown.js"></script>
+    <script type="text/javascript" src="/javascripts/tab.js"></script>
+    <script type="text/javascript" src="/javascripts/alert.js"></script>
+{{/content}} 

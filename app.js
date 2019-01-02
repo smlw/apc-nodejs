@@ -13,7 +13,7 @@ const app = express();
 // VIEW ENGINE
 const staticUrl = '/';
 const hbs = expressHbs.create({
-    layoutsDir: "views/layouts", 
+    layoutsDir: "views/partials/layouts", 
     partialsDir: "views/partials",
     defaultLayout: "base",
     extname: "hbs",
@@ -33,6 +33,7 @@ app.use('/stylesheets', express.static(__dirname + '/node_modules/bootstrap/dist
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/js/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery-validation/dist'));
+app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist'));
 
 app.use(express.static('public'));
 
@@ -43,9 +44,12 @@ app.use(bodyParser.json());
 // ROUTERS
 const routes = require('./routes');
 app.use('/app/add', routes.addApp);
+app.use('/account', routes.account);
 
 app.get('/', (req, res) => {
-    res.render("index")
+    res.render("index", {
+        layout: 'base'
+    })
 });
 
 // SERVER
