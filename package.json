@@ -13,7 +13,6 @@
     "eslint-plugin-node": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-minify-css": "^2.1.3",
     "gulp-nodemon": "^2.4.2",
     "gulp-plumber": "^1.2.0",
     "gulp-sass": "^4.0.1",
@@ -32,6 +31,7 @@
     "express-handlebars": "^3.0.0",
     "express-handlebars-layouts": "^1.0.0",
     "fs": "^0.0.1-security",
+    "gulp-minify-css": "^1.2.4",
     "handlebars-static": "^2.0.2",
     "hbs": "^4.0.1",
     "http2": "^3.3.7",
@@ -40,6 +40,7 @@
     "jugglingdb": "^2.0.0-rc8",
     "jugglingdb-mongodb": "^0.2.0",
     "jugglingdb-mysql": "^0.2.3",
+    "mysql": "^2.16.0",
     "popper.js": "^1.14.6",
     "request": "^2.88.0",
     "spdy": "^4.0.0"

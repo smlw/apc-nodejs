@@ -152,9 +152,9 @@ function regApp(elem) {
                 console.log(data);
             } else {
                 registerApp.setDBData(DBdata.host, DBdata.user, DBdata.password, DBdata.port, DBdata.tableName, DBdata.dbType);
-                $('#test-l-3').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+ data.msg +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
-                $('.btn-contolls').find('.res-step-3').addClass('d-block');
+                $('#test-l-3').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+ data.msg + data.cols +'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                // $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
+                // $('.btn-contolls').find('.res-step-3').addClass('d-block');
                 console.log(registerApp.getAppObject());
                 console.log(data);
             }

@@ -3,7 +3,7 @@ const router = express.Router();
 const models = require('../models');
 const cheerio = require('cheerio');
 const request = require('request');
-const AdapterMongoDB = require('../adapters/mongodb');
+const mysql = require('mysql');
 
 router.get('/', (req, res) => {
     res.render('addApp');
@@ -19,44 +19,50 @@ router.post('/db', async (req, res) => {
     const type = req.body.dbType.trim();
 
     try {
-        var Schema = require('jugglingdb').Schema;
-        var schema = new Schema('mysql', {
+        var connection = mysql.createConnection({
             host: host,
-            username: user,
+            user: user,
             password: password,
-            tableName : tableName,
-            database: 'joomladb',
-            port: port
+            tableName: tableName,
+            database: 'joomladb'
         });
-        
-        // console.log("teest " + schema.connection.connect.code)
-        schema
-        .on('connected', function () {
-            console.log('im connected');
-                // schema.client.query(`SELECT * FROM ${schema.settings.tableName}`, function(err, data){
-                //     console.log(err)
-                //     if(err){
-                //         res.json({
-                //             ok: false,
-                //             msg: err.code
-                //         })
-                //         schema.disconnect();
-                //     } else {
-                //         res.json({
-                //             ok: true,
-                //             msg: 'Проверка пройдена'
-                //         })
-                //     }
-                // });
-            })
-            .on('disconnected', function () {
-                console.log('im DISconnected'); 
-            })
+
+        connection.connect(function (err) {
+            console.log('Tried connection')
+            if (err) {
+                res.json({
+                    ok: false,
+                    msg: 'Ошибка подключения! ' + err.code
+                });
+                connection.end();
+            } else {
+                connection.query('DESCRIBE wercs_users', function (err, result, field) {
+                    if (err) {
+                        res.json({
+                            ok: false,
+                            msg: 'Ошибка. Таблица не найдена'
+                        });
+                    } else {
+                        var cols = [];
+                        result.forEach(element => {
+                            cols.push(element.Field)
+                        });
+    
+                        res.json({
+                            ok: true,
+                            msg: 'Соединение было установлено!',
+                            cols
+                        });
+                    }
+                });
+                connection.end();
+            };
+        });
     } catch (error) {
         if (error) {
             res.json({
                 ok: false,
-                msg: 'Ошибка. Проверьте правильность введенных данных'
+                msg: 'Ошибка.'
             })
         }
     }
