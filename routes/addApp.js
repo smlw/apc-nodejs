@@ -9,66 +9,6 @@ router.get('/', (req, res) => {
     res.render('addApp');
 });
 
-//CHECK DB CONNECTION
-router.post('/db', async (req, res) => {
-    const host = req.body.host.trim();
-    const database = req.body.database.trim();
-    const user = req.body.user.trim();
-    const password = req.body.password.trim();
-    const tableName = req.body.tableName.trim();
-    const port = req.body.port.trim() || '';
-    const type = req.body.dbType.trim();
-
-    try {
-        let connection = mysql.createConnection({
-            host: host,
-            user: user,
-            password: password,
-            tableName: tableName,
-            database: database
-        });
-
-        connection.connect(function (err) {
-            console.log('Tried connection')
-            if (err) {
-                res.json({
-                    ok: false,
-                    msg: 'Ошибка подключения! ' + err.code
-                });
-                connection.end();
-            } else {
-                connection.query('DESCRIBE wercs_users', function (err, result, field) {
-                    if (err) {
-                        res.json({
-                            ok: false,
-                            msg: 'Ошибка. Таблица не найдена'
-                        });
-                    } else {
-                        let cols = [];
-                        result.forEach(element => {
-                            cols.push(element.Field)
-                        });
-    
-                        res.json({
-                            ok: true,
-                            msg: 'Соединение было установлено!',
-                            cols
-                        });
-                    }
-                });
-                connection.end();
-            };
-        });
-    } catch (error) {
-        if (error) {
-            res.json({
-                ok: false,
-                msg: 'Ошибка.'
-            })
-        }
-    }
-});
-
 // CHECK RIGHTS 
 router.post('/rights', async (req, res) => {
     const url = req.body.url.trim();
@@ -116,49 +56,122 @@ router.post('/rights', async (req, res) => {
             })
         }
     }
-
-
 });
 
-router.post('/', async (req, res, next) => {
+//CHECK DB CONNECTION
+router.post('/db', async (req, res) => {
+    const host = req.body.host.trim();
+    const database = req.body.database.trim();
+    const user = req.body.user.trim();
+    const password = req.body.password.trim();
+    const tableName = req.body.tableName.trim();
+    const port = req.body.port.trim() || '';
+    const type = req.body.dbType.trim();
 
-    const owner = req.body.owner.trim();
-    const uri = req.body.uri.trim();
-    const dbType = req.body.dbType.trim();
-    const dbUser = req.body.dbUser.trim();
-    const dbPassword = req.body.dbPassword.trim();
-    const dbTable = req.body.dbTable.trim();
-    const dbUrl = req.body.dbUrl.trim();
-    const port = req.body.owner.trim();
+    try {
+        let connection = mysql.createConnection({
+            host: host,
+            user: user,
+            password: password,
+            tableName: tableName,
+            database: database
+        });
 
-    const appData = {
-        owner,
-        uri,
-        dbType,
-        dbUser,
-        dbPassword,
-        dbTable,
-        dbUrl,
-        port
-    };
+        connection.connect(function (err) {
+            console.log('Tried connection')
+            if (err) {
+                res.json({
+                    ok: false,
+                    msg: 'Ошибка подключения! ' + err.code
+                });
+                connection.end();
+            } else {
+                connection.query('DESCRIBE wercs_users', function (err, result, field) {
+                    if (err) {
+                        res.json({
+                            ok: false,
+                            msg: 'Ошибка. Таблица не найдена'
+                        });
+                    } else {
+                        let cols = [];
+                        result.forEach(element => {
+                            cols.push(element.Field)
+                        });
 
-    if (!appData.owner || !appData.uri || !appData.dbType || !appData.dbUser || !appData.dbPassword || !appData.dbTable || !appData.dbUrl) {
+                        res.json({
+                            ok: true,
+                            msg: 'Соединение было установлено!',
+                            cols
+                        });
+                    }
+                });
+                connection.end();
+            };
+        });
+    } catch (error) {
+        if (error) {
+            res.json({
+                ok: false,
+                msg: 'Ошибка.'
+            })
+        }
+    }
+});
+
+
+router.post('/save', async (req, res, next) => {
+    const domainName = req.body.domainName.trim();
+    const rights = req.body.checkRights;
+    const host = req.body.DBData.host.trim();
+    const database = req.body.DBData.database.trim();
+    const user = req.body.DBData.user.trim();
+    const password = req.body.DBData.password.trim();
+    const table = req.body.DBData.tableName.trim();
+    const port = req.body.DBData.port.trim();
+    const type = req.body.DBData.DBtype.trim();
+    const col_user_id = req.body.DBData.cols.user_id.trim();
+    const col_user_password = req.body.DBData.cols.user_password.trim();
+    const col_user_email = req.body.DBData.cols.user_email.trim();
+    const col_user_phone = req.body.DBData.cols.user_phone.trim();
+
+    console.log(appData)
+    if(!domainName){
         res.json({
             ok: false,
-            message: 'Заполните все необходимые поля!'
+            error: 'Не заполнено поле домена!',
+        });
+    } else if (!rights) {
+        res.json({
+            ok: false,
+            error: 'Не подтверждены права на сайт!'
+        });
+    } else if (!host || !database || !user || !password || !table || !port || !type){
+        res.json({
+            ok: false,
+            error: 'Проверьте правильность полей для базы данных. Проверьте соединение!'
+        });
+    } else if (!col_user_id || !col_user_password || !col_user_email || !col_user_phone){
+        res.json({
+            ok: false,
+            error: 'Проверьте правильность полей для колонок!'
         });
     } else {
-        await models.Apps.create(appData, (err, appInfo) => {
-            console.log(err);
-            console.log(appInfo)
-        });
-
-        res.json({
-            ok: true,
-            message: 'Приложение было успешно создано!',
-            appData
-        });
+        // создаем запись в нашей БД
     }
+
+    // if (!domainName || !rights || !user || !table || !password || !host || !database || !col_user_id || !col_user_password || !col_user_email || !col_user_phone) {
+        
+    //     res.json({
+    //         ok: false,
+    //         message: 'Заполните все необходимые поля!'
+    //     });
+    // } else {
+    //     res.json({
+    //         ok: true,
+    //         message: 'Приложение было успешно создано!',
+    //         appData
+    //     });
+    // }
 })
 
 module.exports = router;

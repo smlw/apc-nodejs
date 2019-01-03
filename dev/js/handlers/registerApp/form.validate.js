@@ -148,7 +148,6 @@ function regApp(elem) {
             url: '/app/add/rights'
         }).done(function (data) {
             if (!data.ok) {
-                // $('#test-l-2').append('<span class="text-danger">'+ data.msg +'</span>');
                 $('#test-l-2').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 console.log(data);
             } else {
@@ -227,6 +226,24 @@ function regApp(elem) {
         console.log(registerApp.getAppObject())
     };
 
+    this.saveData = function(){
+        var app = registerApp.getAppObject();
+
+        console.log('app')
+        console.log(app)
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(app),
+            contentType: 'application/json',
+            url: '/app/add/save'
+        }).done(function (data) {
+            if (!data.ok) {
+                console.log('FAIL');
+            } else {
+                console.log('OKS');
+            }
+        });
+    }
     var self = this;
     elem.onclick = function (e) {
         var target = e.target;
