@@ -13,7 +13,13 @@ function RegisterApp() {
             password: '',
             port: '',
             tableName: '',
-            DBtype: ''
+            DBtype: '',
+            cols: {
+                user_id: '',
+                user_password: '',
+                user_email: '',
+                user_phone: ''
+            }
         }
     };
 
@@ -35,6 +41,14 @@ function RegisterApp() {
         appObject.DBData.DBtype = DBtype;
         return true;
     };
+
+    this.setDBcol = function(user_id, user_password, user_email, user_phone){
+        appObject.DBData.cols.user_id = user_id;
+        appObject.DBData.cols.user_password = user_password;
+        appObject.DBData.cols.user_email = user_email;
+        appObject.DBData.cols.user_phone = user_phone;
+        return true;
+    }
 
     // GETTERS
     this.getAppObject = function () {
