@@ -84,7 +84,7 @@ router.post('/rights', async (req, res) => {
                 if (metaVerify) {
                     res.json({
                         ok: true,
-                        msg: 'Успех',
+                        msg: 'Права были подтверждены!',
                         metaVerify
                     });
                 } else {

@@ -123,6 +123,10 @@ function regApp(elem) {
             $('.btn-contolls').find('.res-step-1').addClass('d-block');
             $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
             $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>Url сохранен! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            
+            // Устанавливаем значения для следующего шага
+            $('#test-l-2').find('.domainName').text(inputVal).attr('href', inputVal);
+            $('#test-l-2').find('.secretKey').text(registerApp.getAppObject().secretKey);
             console.log(registerApp.getAppObject())
         } else {
             $('.btn-contolls').find('.res-step-1').removeClass('d-block');
