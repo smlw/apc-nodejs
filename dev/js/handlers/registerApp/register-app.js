@@ -32,8 +32,9 @@ function RegisterApp() {
         appObject.checkRights = true;
         return true;
     };
-    this.setDBData = function (host, user, password, port, tableName, DBtype) {
+    this.setDBData = function (host, database, user, password, port, tableName, DBtype) {
         appObject.DBData.host = host;
+        appObject.DBData.database = database;
         appObject.DBData.user = user;
         appObject.DBData.password = password;
         appObject.DBData.port = port;

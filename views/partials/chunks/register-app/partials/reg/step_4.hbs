@@ -1,9 +1,43 @@
-<div class="alert text-center" role="alert">
-        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-checked">
-            <use xlink:href="img/svg/sprite.svg#si-glyph-checked" />
-        </svg>
-    <h4 class="alert-heading">Почти все готово!</h4>
-    <p>Вы успешно зарегистрировали Ваше приложение. Осталось выполнить настройки на стороне Вашего приложения. </p>
-    <hr>
-    <p class="mb-0">Перейти в <a href="#">настройки</a> или открыть <a href="#">Документацию</a></p>
-</div>
+    <div class="step_3_cols">
+        <h2>Укажите поля базы данных к соответсвующему смыслу.</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab iste voluptatum et, maiores reprehenderit, architecto odit quaerat, hic voluptatem optio amet? Totam similique saepe sed quia enim cum itaque iure.</p>
+    <div class="form-row ">
+        <div class="form-group col-md-3">
+            <label for="step_3-user">User ID</label>
+            <select id="step_3-col-user_id" name="step_3-col-user_id" class="form-control">
+                <option disabled selected="selected">Не выбрано</option>
+                <!-- add lsit of cols -->
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="step_3-password">User Password</label>
+            <select id="step_3-col-user_password" name="step_3-col-user_password" class="form-control">
+                <option disabled selected="selected">Не выбрано</option>
+                <!-- add lsit of cols -->
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="step_3-password">User Email</label>
+            <select id="step_3-col-user_email" name="step_3-col-user_email" class="form-control">
+                <option disabled selected="selected">Не выбрано</option>
+                <option value="null">Такого поля нет</option>
+                <!-- add lsit of cols -->
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="step_3-password">User Phone</label>
+            <select id="step_3-col-user_phone" name="step_3-col-user_phone" class="form-control">
+                <option disabled selected="selected">Не выбрано</option>
+                <option value="null">Такого поля нет</option>
+                <!-- add lsit of cols -->
+            </select>
+        </div>
+
+        <div class="btn-contolls d-flex justify-content-start">
+            <button type="submit" class="btn btn-secondary btn-prev">Назад</button>
+            <button type="submit" class="btn btn-primary setDBCols" data-action="setDBCols">Сохранить</button>
+            <button type="submit" class="btn btn-success btn-next res-step-4 d-none">Далее</button>
+        </div>
+
+    </div>
+    </div>

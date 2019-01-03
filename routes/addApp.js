@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
 //CHECK DB CONNECTION
 router.post('/db', async (req, res) => {
     const host = req.body.host.trim();
+    const database = req.body.database.trim();
     const user = req.body.user.trim();
     const password = req.body.password.trim();
     const tableName = req.body.tableName.trim();
@@ -19,12 +20,12 @@ router.post('/db', async (req, res) => {
     const type = req.body.dbType.trim();
 
     try {
-        var connection = mysql.createConnection({
+        let connection = mysql.createConnection({
             host: host,
             user: user,
             password: password,
             tableName: tableName,
-            database: 'joomladb'
+            database: database
         });
 
         connection.connect(function (err) {
@@ -43,7 +44,7 @@ router.post('/db', async (req, res) => {
                             msg: 'Ошибка. Таблица не найдена'
                         });
                     } else {
-                        var cols = [];
+                        let cols = [];
                         result.forEach(element => {
                             cols.push(element.Field)
                         });
