@@ -25,7 +25,7 @@ function regApp(elem) {
             },
             "step_3-user": {
                 required: true,
-                minlength: 4
+                minlength: 2
             },
             "step_3-password": {
                 required: true,
@@ -63,7 +63,7 @@ function regApp(elem) {
                 required: "Хост базы данных",
             },
             "step_3-db-name": {
-                required: "Укажите имя базы данных"
+                required: "Имя базы данных"
             },
             "step_3-user": {
                 required: "Пользователь базы данных",
@@ -82,16 +82,16 @@ function regApp(elem) {
                 required: "Тип СУБД",
             },
             "step_3-col-user_id": {
-                required: "Укажите имя поля user_id"
+                required: "Имя поля user_id"
             },
             "step_3-col-user_email": {
-                required: "Укажите имя поля user_email"
+                required: "Имя поля user_email"
             },
             "step_3-col-user_phone": {
-                required: "Укажите имя поля user_phone"
+                required: "Имя поля user_phone"
             },
             "step_3-col-user_password": {
-                required: "Укажите имя поля user_password"
+                required: "Имя поля user_password"
             }
         }
     });

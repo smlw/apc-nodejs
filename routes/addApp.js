@@ -135,43 +135,61 @@ router.post('/save', async (req, res, next) => {
     const col_user_phone = req.body.DBData.cols.user_phone.trim();
 
     console.log(appData)
-    if(!domainName){
+    if(!domainName || (domainName.length < 6 || domainName.length > 60) ){
         res.json({
             ok: false,
-            error: 'Не заполнено поле домена!',
+            error: 'Отказано. Проверьте поле домена!',
         });
     } else if (!rights) {
         res.json({
             ok: false,
-            error: 'Не подтверждены права на сайт!'
+            error: 'Отказано. Не подтверждены права на сайт!'
         });
     } else if (!host || !database || !user || !password || !table || !port || !type){
         res.json({
             ok: false,
-            error: 'Проверьте правильность полей для базы данных. Проверьте соединение!'
+            error: 'Отказано. Проверьте правильность полей базы данных. Проверьте соединение!'
+        });
+    } else if (host.length < 6 || host.length > 60) {
+        res.json({
+            ok: false,
+            error: 'Отказано. Длина хоста от 4 до 64 символов!'
+        });
+    } else if (database.length < 1 || database.length > 60){
+        res.json({
+            ok: false,
+            error: 'Отказано. Длина имени базы данных от 1 до 64 символов!'
+        });
+    } else if (user.length < 2 || user.length > 60){
+        res.json({
+            ok: false,
+            error: 'Отказано. Длина имени пользователя БД от 1 до 64 символов!'
+        });
+    } else if (password.length < 8){
+        res.json({
+            ok: false,
+            error: 'Отказано. Длина пароля от 8 симоволов'
+        });
+    } else if (table.length < 2 || table.length > 60){
+        res.json({
+            ok: false,
+            error: 'Отказано. Длина таблцы БД от 2 до 64 символов!'
+        });
+    } else if (!(Number.isNan(port))){
+        res.json({
+            ok: false,
+            error: 'Отказано. Порт должен быть числом!'
         });
     } else if (!col_user_id || !col_user_password || !col_user_email || !col_user_phone){
         res.json({
             ok: false,
             error: 'Проверьте правильность полей для колонок!'
         });
-    } else {
+    }
+    
+    else {
         // создаем запись в нашей БД
     }
-
-    // if (!domainName || !rights || !user || !table || !password || !host || !database || !col_user_id || !col_user_password || !col_user_email || !col_user_phone) {
-        
-    //     res.json({
-    //         ok: false,
-    //         message: 'Заполните все необходимые поля!'
-    //     });
-    // } else {
-    //     res.json({
-    //         ok: true,
-    //         message: 'Приложение было успешно создано!',
-    //         appData
-    //     });
-    // }
 })
 
 module.exports = router;
