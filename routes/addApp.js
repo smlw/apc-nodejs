@@ -24,14 +24,12 @@ router.post('/rights', async (req, res) => {
                 if (metaVerify) {
                     res.json({
                         ok: true,
-                        msg: 'Права были подтверждены!',
-                        metaVerify
+                        msg: 'Права были подтверждены!'
                     });
                 } else {
                     res.json({
                         ok: false,
-                        msg: 'Ошибка. Метатег не найден',
-                        metaVerify
+                        msg: 'Ошибка. Метатег не найден'
                     });
                 }
             } else {
@@ -135,7 +133,7 @@ router.post('/db', async (req, res) => {
     }
 });
 
-
+// Saving app into database
 router.post('/save', async (req, res, next) => {
     const domainName = req.body.domainName.trim();
     const rights = req.body.checkRights;

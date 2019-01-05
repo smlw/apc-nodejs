@@ -1,38 +1,38 @@
-function RegisterApp() {
+var App = (function () {
     function randomString(length) {
         return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
     }
 
     var appObject = {
         secretKey: randomString(16),
-        domainName: '',
-        checkRights: false,
+        domainName: null,
+        checkRights: null,
         DBData: {
-            host: '',
-            user: '',
-            password: '',
-            port: '',
-            tableName: '',
-            DBtype: '',
+            host: null,
+            user: null,
+            password: null,
+            port: null,
+            tableName: null,
+            DBtype: null,
             cols: {
-                user_id: '',
-                user_password: '',
-                user_email: '',
-                user_phone: ''
+                user_id: null,
+                user_password: null,
+                user_email: null,
+                user_phone: null,
             }
         }
     };
 
-    // SETTERS
-    this.setDomainName = function (domainLink) {
+    var setDomainName = function (domainLink) {
         appObject.domainName = domainLink;
         return true
     };
-    this.setRights = function () {
+
+    var setRights = function () {
         appObject.checkRights = true;
         return true;
     };
-    this.setDBData = function (host, database, user, password, port, tableName, DBtype) {
+    var setDBData = function (host, database, user, password, port, tableName, DBtype) {
         appObject.DBData.host = host;
         appObject.DBData.database = database;
         appObject.DBData.user = user;
@@ -42,8 +42,8 @@ function RegisterApp() {
         appObject.DBData.DBtype = DBtype;
         return true;
     };
-
-    this.setDBcol = function(user_id, user_password, user_email, user_phone){
+    
+    var setDBcol = function(user_id, user_password, user_email, user_phone){
         appObject.DBData.cols.user_id = user_id;
         appObject.DBData.cols.user_password = user_password;
         appObject.DBData.cols.user_email = user_email;
@@ -51,9 +51,15 @@ function RegisterApp() {
         return true;
     }
 
-    // GETTERS
-    this.getAppObject = function () {
+    var getAppObject = function () {
         return appObject;
     };
 
-};
+    return {
+        setDomainName: setDomainName,
+        setRights: setRights,
+        setDBData: setDBData,
+        setDBcol: setDBcol,
+        getAppObject: getAppObject
+    }
+}())
