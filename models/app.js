@@ -1,7 +1,8 @@
-const adapterMongoDB = require('../adapters/mongodb');
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const Apps = adapterMongoDB.schema.define('Apps', {
-    owner:      { type: String, required: true },
+const schema = new Schema({
+    owner:      { type: Schema.Types.ObjectId, required: true },
     uri:        { type: String, required: true },
     dbType:     { type: String, required: true },
     dbUser:     { type: String, required: true },
@@ -12,6 +13,10 @@ const Apps = adapterMongoDB.schema.define('Apps', {
     port:       { type: Number },
     dbFullLink: { type: String },
     createAt:   { type: Date, default: Date.now }
+}, {
+    timestamps: true
 });
 
-module.exports = ('Apps', Apps);
+schema.set('toJSON', {virtuals: true});
+
+module.exports = mongoose.model('App', schema);

@@ -8,6 +8,25 @@ const expressHbs = require("express-handlebars");
 const layouts = require('express-handlebars-layouts');
 const handlebarsStatic = require('handlebars-static');
 
+//database
+const mongoose = require('mongoose');
+// const config = require('./config');
+
+mongoose.Promise = global.Promise;
+// mongoose.set('debug', config.IS_PRODUCTION);
+
+mongoose.connection
+  .on('error', error => console.log(error))
+  .on('close', () => console.log('Database connection closed.'))
+  .once('open', () => {
+    const info = mongoose.connections[0];
+    console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
+    // require('./mocks')();
+  });
+
+mongoose.connect('mongodb://127.0.0.1:27017/apc');
+
+
 const app = express();
 
 // VIEW ENGINE
@@ -71,12 +90,3 @@ spdy
 
 // DATABASE
 
-const AdapterMongoDB = require('./adapters/mongodb');
-
-AdapterMongoDB.schema
-.on('connected', function() {
-    console.log('Connect to DataBase')
-})
-.on('log', function(msg, duration) {
-    console.log(msg);
-})

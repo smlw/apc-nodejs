@@ -1,9 +1,5 @@
-const Apps  = require('./apps');
-const Users = require('./users');
-const Stats = require('./stats');
+const App  = require('./app');
 
 module.exports = {
-    Apps,
-    Users,
-    Stats,
+    App
 }

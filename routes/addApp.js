@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const mysql = require('mysql');
 const models = require('../models');
 const cheerio = require('cheerio');
 const request = require('request');
-const mysql = require('mysql');
 
 router.get('/', (req, res) => {
     res.render('addApp');
@@ -65,56 +65,73 @@ router.post('/db', async (req, res) => {
     const user = req.body.user.trim();
     const password = req.body.password.trim();
     const tableName = req.body.tableName.trim();
-    const port = req.body.port.trim() || '';
+    const port = req.body.port.trim();
     const type = req.body.dbType.trim();
 
     try {
-        let connection = mysql.createConnection({
-            host: host,
-            user: user,
-            password: password,
-            tableName: tableName,
-            database: database
+        const check = await models.App.findOne({
+            dbUrl: host
         });
-
-        connection.connect(function (err) {
-            console.log('Tried connection')
-            if (err) {
-                res.json({
-                    ok: false,
-                    msg: 'Ошибка подключения! ' + err.code
+        
+        if(check){
+            res.json({
+                ok: false,
+                msg: 'Приложение уже зарегистрировано'
+            });
+        } else {
+            try {
+                let connection = mysql.createConnection({
+                    host: host,
+                    user: user,
+                    password: password,
+                    tableName: tableName,
+                    database: database
                 });
-                connection.end();
-            } else {
-                connection.query('DESCRIBE wercs_users', function (err, result, field) {
+        
+                connection.connect(function (err) {
                     if (err) {
                         res.json({
                             ok: false,
-                            msg: 'Ошибка. Таблица не найдена'
+                            msg: err.code
                         });
+                        connection.end();
                     } else {
-                        let cols = [];
-                        result.forEach(element => {
-                            cols.push(element.Field)
+                        connection.query(`DESCRIBE ${tableName}`, function (err, result, field) {
+                            if (err) {
+                                res.json({
+                                    ok: false,
+                                    msg: err.code
+                                });
+                            } else {
+                                let cols = [];
+                                result.forEach(element => {
+                                    cols.push(element.Field)
+                                });
+        
+                                res.json({
+                                    ok: true,
+                                    msg: 'Соединение было установлено!',
+                                    cols
+                                });
+                            }
                         });
-
-                        res.json({
-                            ok: true,
-                            msg: 'Соединение было установлено!',
-                            cols
-                        });
-                    }
+                        connection.end();
+                    };
                 });
-                connection.end();
-            };
-        });
-    } catch (error) {
-        if (error) {
-            res.json({
-                ok: false,
-                msg: 'Ошибка.'
-            })
+            } catch (error) {
+                if (error) {
+                    res.json({
+                        ok: false,
+                        msg: 'Ошибка соединения.'
+                    })
+                }
+            }
         }
+    } catch (error) {
+        res.json({
+            ok: false,
+            msg: 'Попробуйте позже.'
+        })   
     }
 });
 
@@ -186,6 +203,9 @@ router.post('/save', async (req, res, next) => {
             error: 'Проверьте правильность полей для колонок!'
         });
     }
+    // } else if (){
+
+    // }
     
     else {
         // создаем запись в нашей БД

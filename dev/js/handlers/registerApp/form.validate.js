@@ -167,7 +167,7 @@ function regApp(elem) {
         var user = $(inputs.DBData.user).val();
         var password = $(inputs.DBData.password).val();
         var tableName = $(inputs.DBData.tableName).val();
-        var port = $(inputs.DBData.port).val();
+        var port = $(inputs.DBData.port).val() || '';
         var dbType = $(inputs.DBData.dbType).val();
 
         var DBdata = {
