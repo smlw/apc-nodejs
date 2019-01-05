@@ -1,5 +1,3 @@
-var registerApp = new RegisterApp();
-
 // jQuery.validator.addMethod("domain", function (value, element) {
 
 //     return this.optional(element) || /(http:|https:)\/\/(www\.)?(\w|\d)+.+?\/gi/.test(value);
@@ -119,15 +117,15 @@ function regApp(elem) {
         var inputVal = $(inputs.domainName).val();
         var validFlag = regForm.element(inputs.domainName);
         if (validFlag) {
-            registerApp.setDomainName(inputVal);
+            App.setDomainName(inputVal);
             $('.btn-contolls').find('.res-step-1').addClass('d-block');
             $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
             $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>Url сохранен! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             
             // Устанавливаем значения для следующего шага
             $('#test-l-2').find('.domainName').text(inputVal).attr('href', inputVal);
-            $('#test-l-2').find('.secretKey').text(registerApp.getAppObject().secretKey);
-            console.log(registerApp.getAppObject())
+            $('#test-l-2').find('.secretKey').text(App.getAppObject().secretKey);
+            console.log(App.getAppObject())
         } else {
             $('.btn-contolls').find('.res-step-1').removeClass('d-block');
         }
@@ -136,8 +134,8 @@ function regApp(elem) {
 
     this.checkRights = function () {
         var data = {
-            url: registerApp.getAppObject().domainName,
-            secretKey: registerApp.getAppObject().secretKey
+            url: App.getAppObject().domainName,
+            secretKey: App.getAppObject().secretKey
         };
 
         // Тут обработчик и запрос на сервер
@@ -151,11 +149,11 @@ function regApp(elem) {
                 $('#test-l-2').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 console.log(data);
             } else {
-                registerApp.setRights();
+                App.setRights();
                 $('#test-l-2').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('.btn-contolls').find('.btnCheckRights').addClass('d-none');
                 $('.btn-contolls').find('.res-step-2').addClass('d-block');
-                console.log(registerApp.getAppObject());
+                console.log(App.getAppObject());
                 console.log(data);
             }
         });
@@ -180,7 +178,6 @@ function regApp(elem) {
             dbType: dbType
         }
 
-        console.log(DBdata)
         // Тут обработчик и запрос на сервер
         $.ajax({
             type: 'POST',
@@ -191,7 +188,7 @@ function regApp(elem) {
             if (!data.ok) {
                 $('#test-l-3').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             } else {
-                registerApp.setDBData(DBdata.host, DBdata.database, DBdata.user, DBdata.password, DBdata.port, DBdata.tableName, DBdata.dbType);
+                App.setDBData(DBdata.host, DBdata.database, DBdata.user, DBdata.password, DBdata.port, DBdata.tableName, DBdata.dbType);
                 $('#test-l-3').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('.btn-contolls').find('.btncheckDBData').addClass('d-none');
                 $('.btn-contolls').find('.res-step-3').addClass('d-block');
@@ -202,7 +199,7 @@ function regApp(elem) {
                 });
             }
         });
-        console.log(registerApp.getAppObject())
+        console.log(App.getAppObject())
     };
 
 
@@ -218,16 +215,16 @@ function regApp(elem) {
         var validUser_phone     = regForm.element(inputs.DBData.cols.user_phone);
 
         if(validUser_id && validUser_password && validUser_email && validUser_phone){
-            registerApp.setDBcol(user_id, user_password, user_email, user_phone);
+            App.setDBcol(user_id, user_password, user_email, user_phone);
             $('.setDBCols').addClass('d-none')
             $('.res-step-4').addClass('d-block')
         }
 
-        console.log(registerApp.getAppObject())
+        console.log(App.getAppObject())
     };
 
     this.saveData = function(){
-        var app = registerApp.getAppObject();
+        var app = App.getAppObject();
 
         console.log('app')
         console.log(app)
