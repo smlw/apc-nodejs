@@ -68,15 +68,16 @@ router.post('/db', async (req, res) => {
     const port = req.body.port.trim();
     const type = req.body.dbType.trim();
 
+    // Проверяем, существует ли уже такая же БД
     try {
         const check = await models.App.findOne({
-            dbUrl: host
+            dbHost: host
         });
         
         if(check){
             res.json({
                 ok: false,
-                msg: 'Приложение уже зарегистрировано'
+                msg: 'Приложение уже зарегистрировано!'
             });
         } else {
             try {
@@ -85,7 +86,8 @@ router.post('/db', async (req, res) => {
                     user: user,
                     password: password,
                     tableName: tableName,
-                    database: database
+                    database: database,
+                    port: port
                 });
         
                 connection.connect(function (err) {
@@ -96,7 +98,7 @@ router.post('/db', async (req, res) => {
                         });
                         connection.end();
                     } else {
-                        connection.query(`DESCRIBE ${tableName}`, function (err, result, field) {
+                        connection.query(`DESCRIBE ${tableName}`, function (err, result) {
                             if (err) {
                                 res.json({
                                     ok: false,
@@ -119,12 +121,10 @@ router.post('/db', async (req, res) => {
                     };
                 });
             } catch (error) {
-                if (error) {
-                    res.json({
-                        ok: false,
-                        msg: 'Ошибка соединения.'
-                    })
-                }
+                res.json({
+                    ok: false,
+                    msg: 'Ошибка соединения.'
+                })
             }
         }
     } catch (error) {
@@ -151,64 +151,104 @@ router.post('/save', async (req, res, next) => {
     const col_user_email = req.body.DBData.cols.user_email.trim();
     const col_user_phone = req.body.DBData.cols.user_phone.trim();
 
-    console.log(appData)
     if(!domainName || (domainName.length < 6 || domainName.length > 60) ){
         res.json({
             ok: false,
-            error: 'Отказано. Проверьте поле домена!',
+            msg: 'Отказано. Проверьте поле домена!',
         });
     } else if (!rights) {
         res.json({
             ok: false,
-            error: 'Отказано. Не подтверждены права на сайт!'
+            msg: 'Отказано. Не подтверждены права на сайт!'
         });
-    } else if (!host || !database || !user || !password || !table || !port || !type){
+    } else if (!host || !database || !user || !password || !table || !type){
         res.json({
             ok: false,
-            error: 'Отказано. Проверьте правильность полей базы данных. Проверьте соединение!'
+            msg: 'Отказано. Проверьте правильность полей базы данных. Проверьте соединение!'
         });
     } else if (host.length < 6 || host.length > 60) {
         res.json({
             ok: false,
-            error: 'Отказано. Длина хоста от 4 до 64 символов!'
+            msg: 'Отказано. Длина хоста от 4 до 64 символов!'
         });
     } else if (database.length < 1 || database.length > 60){
         res.json({
             ok: false,
-            error: 'Отказано. Длина имени базы данных от 1 до 64 символов!'
+            msg: 'Отказано. Длина имени базы данных от 1 до 64 символов!'
         });
     } else if (user.length < 2 || user.length > 60){
         res.json({
             ok: false,
-            error: 'Отказано. Длина имени пользователя БД от 1 до 64 символов!'
+            msg: 'Отказано. Длина имени пользователя БД от 1 до 64 символов!'
         });
     } else if (password.length < 8){
         res.json({
             ok: false,
-            error: 'Отказано. Длина пароля от 8 симоволов'
+            msg: 'Отказано. Длина пароля от 8 симоволов'
         });
     } else if (table.length < 2 || table.length > 60){
         res.json({
             ok: false,
             error: 'Отказано. Длина таблцы БД от 2 до 64 символов!'
         });
-    } else if (!(Number.isNan(port))){
+    } else if (port && Number.isInteger(port)){
         res.json({
             ok: false,
-            error: 'Отказано. Порт должен быть числом!'
+            msg: 'Отказано. Проверьте порт подключения!'
         });
     } else if (!col_user_id || !col_user_password || !col_user_email || !col_user_phone){
         res.json({
             ok: false,
-            error: 'Проверьте правильность полей для колонок!'
+            msg: 'Проверьте правильность полей для колонок!'
         });
-    }
-    // } else if (){
-
-    // }
-    
-    else {
+    } else {
         // создаем запись в нашей БД
+        const check = await models.App.findOne({
+            dbHost: host
+        });
+        
+        if(check){
+            res.json({
+                ok: false,
+                msg: 'Приложение уже зарегистрировано!'
+            });
+        } else {
+            try {
+                const app = await models.App.create({
+                    owner: 'owner',
+                    domain : domainName,
+                    dbHost: host,
+                    dbName: database,
+                    dbUser: user,
+                    dbPassword: password,
+                    dbTable: table,
+                    dbPort: port,
+                    dbType: type,
+                    colUserId: col_user_id,
+                    colUserPassword: col_user_password,
+                    colUserEmail: col_user_email,
+                    colUserPhone: col_user_phone
+                });
+    
+                if(app){
+                    res.json({
+                        ok: true,
+                        msg: 'Приложение было успешно зарегистрировано!'
+                    })
+                } else {
+                    res.json({
+                        ok: false,
+                        msg: 'Настройки не сохранены! Повторите позже!'
+                    });
+                }
+                
+            } catch (error) {
+                res.json({
+                    ok: false,
+                    msg: 'Повторите позже!'
+                });
+            }
+        }
     }
 })
 

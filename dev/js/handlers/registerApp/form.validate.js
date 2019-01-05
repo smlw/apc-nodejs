@@ -239,8 +239,10 @@ function regApp(elem) {
         }).done(function (data) {
             if (!data.ok) {
                 console.log('FAIL');
+                $('#test-l-5').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             } else {
                 console.log('OKS');
+                $('#test-l-5').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }
         });
     }

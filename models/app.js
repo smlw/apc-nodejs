@@ -2,17 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    owner:      { type: Schema.Types.ObjectId, required: true },
-    uri:        { type: String, required: true },
-    dbType:     { type: String, required: true },
-    dbUser:     { type: String, required: true },
-    dbPassword: { type: String, required: true },
-    dbTable:    { type: String, required: true },
-    dbUrl:      { type: String, required: true },
-    isActive:   { type: Boolean, default: false },
-    port:       { type: Number },
-    dbFullLink: { type: String },
-    createAt:   { type: Date, default: Date.now }
+    owner:              { type: String, required: true },
+    domain:             { type: String, required: true },
+    dbHost:             { type: String, required: true },
+    dbName:             { type: String, required: true },
+    dbUser:             { type: String, required: true },
+    dbPassword:         { type: String, required: true },
+    dbTable:            { type: String, required: true },
+    dbPort:             { type: Number },
+    dbType:             { type: String, required: true },
+    dbFullLink:         { type: String },
+    colUserId:          { type: String, required: true },
+    colUserPassword:    { type: String, required: true },
+    colUserEmail:       { type: String, required: true },
+    colUserPhone:       { type: String},
+    isActive:           { type: Boolean, default: false},
+    createAt:           { type: Date, default: Date.now }
 }, {
     timestamps: true
 });
