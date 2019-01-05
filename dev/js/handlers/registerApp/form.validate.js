@@ -251,4 +251,3 @@ function regApp(elem) {
     };
 
 }
-new regApp(regAppForm);
