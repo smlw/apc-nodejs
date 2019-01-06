@@ -9,6 +9,25 @@ router.get('/', (req, res) => {
     res.render('addApp');
 });
 
+// CHECK URL
+router.post('/url', async(req, res) => {
+    const url = req.body.url.trim();
+
+    await request(url, function (error, response) {
+        if (!error && response.statusCode == 200) {
+            res.json({
+                ok: true,
+                msg: 'Url сохранен'
+            })
+        } else {
+            res.json({
+                ok: false,
+                msg: error.code
+            })
+        }
+    });
+});
+
 // CHECK RIGHTS 
 router.post('/rights', async (req, res) => {
     const url = req.body.url.trim();

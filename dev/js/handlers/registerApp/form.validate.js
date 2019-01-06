@@ -115,20 +115,33 @@ function regApp(elem) {
 
     this.checkDomainName = function () {
         var inputVal = $(inputs.domainName).val();
-        var validFlag = regForm.element(inputs.domainName);
-        if (validFlag) {
-            App.setDomainName(inputVal);
-            $('.btn-contolls').find('.res-step-1').addClass('d-block');
-            $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
-            $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>Url сохранен! <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            
-            // Устанавливаем значения для следующего шага
-            $('#test-l-2').find('.domainName').text(inputVal).attr('href', inputVal);
-            $('#test-l-2').find('.secretKey').text(App.getAppObject().secretKey);
-            console.log(App.getAppObject())
-        } else {
-            $('.btn-contolls').find('.res-step-1').removeClass('d-block');
+
+        var data = {
+            url: inputVal
         }
+
+        // Тут обработчик и запрос на сервер
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: '/app/add/url'
+        }).done(function (data) {
+            if (!data.ok) {
+                $('#test-l-1').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                console.log(data);
+            } else {
+                App.setDomainName(data.url);
+                $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+data.msg+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('.btn-contolls').find('.res-step-1').addClass('d-block');
+                $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
+
+                // Устанавливаем значения для следующего шага
+                $('#test-l-2').find('.domainName').text(inputVal).attr('href', inputVal);
+                $('#test-l-2').find('.secretKey').text(App.getAppObject().secretKey);
+                console.log(App.getAppObject())
+            }
+        });
     };
 
 
