@@ -249,5 +249,5 @@ function regApp(elem) {
             self[action]();
         }
     };
-
 }
+new regApp(regAppForm);
