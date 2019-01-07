@@ -13,19 +13,34 @@ router.get('/', (req, res) => {
 router.post('/url', async(req, res) => {
     const url = req.body.url.trim();
 
-    await request(url, function (error, response) {
-        if (!error && response.statusCode == 200) {
-            res.json({
-                ok: true,
-                msg: 'Url сохранен'
-            })
-        } else {
-            res.json({
-                ok: false,
-                msg: error.code
-            })
-        }
-    });
+    const isValidUrl = (url) => {
+        const regex = /http(?:s?):\/\/([\w]+\.{1}[\w]+\.?[\w]+)+/g;
+        const occurrence = url.match(regex);
+        return (regex.test(url)) && (url === occurrence[0]);
+    }
+
+    if(isValidUrl(url)){
+        await request(url, function (error, response) {
+            if (!error && response.statusCode == 200) {
+                res.json({
+                    ok: true,
+                    msg: 'Url сохранен'
+                })
+            } else {
+                res.json({
+                    ok: false,
+                    msg: error.code
+                })
+            }
+        });
+    } else {
+        res.json({
+            ok: false,
+            msg: 'Url должен быть вида "http://site.ru или https://site.ru"'
+        })
+    }
+
+
 });
 
 // CHECK RIGHTS 
