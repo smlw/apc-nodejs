@@ -9,22 +9,21 @@ router.get('/', (req, res) => {
     res.render('addApp');
 });
 
-// CHECK URL
-router.post('/url', async(req, res) => {
+// CHECK VALID URL
+const checkValidUrl = async (req, res) => {
     const url = req.body.url.trim();
-
     const isValidUrl = (url) => {
         const regex = /http(?:s?):\/\/([\w]+\.{1}[\w]+\.?[\w]+)+/g;
         const occurrence = url.match(regex);
         return (regex.test(url)) && (url === occurrence[0]);
     }
-
     if(isValidUrl(url)){
         await request(url, function (error, response) {
             if (!error && response.statusCode == 200) {
                 res.json({
                     ok: true,
-                    msg: 'Url сохранен'
+                    msg: 'Url сохранен',
+                    url
                 })
             } else {
                 res.json({
@@ -36,15 +35,12 @@ router.post('/url', async(req, res) => {
     } else {
         res.json({
             ok: false,
-            msg: 'Url должен быть вида "http://site.ru или https://site.ru"'
+            msg: 'Url должен быть вида http://site.ru или https://site.ru'
         })
     }
+}
 
-
-});
-
-// CHECK RIGHTS 
-router.post('/rights', async (req, res) => {
+const checkRights = async (req, res) => { 
     const url = req.body.url.trim();
     const secretKey = req.body.secretKey.trim();
 
@@ -55,6 +51,7 @@ router.post('/rights', async (req, res) => {
                 // const metaVerify = $("meta[name='apc-verification']").attr("content");
                 const metaVerify = $("meta[http-equiv='content-type']").attr("content");
 
+                // if (metaVerify === secretKey) {
                 if (metaVerify) {
                     res.json({
                         ok: true,
@@ -88,10 +85,9 @@ router.post('/rights', async (req, res) => {
             })
         }
     }
-});
+}
 
-//CHECK DB CONNECTION
-router.post('/db', async (req, res) => {
+const checkDbConnection = async (req, res) => { 
     const host = req.body.host.trim();
     const database = req.body.database.trim();
     const user = req.body.user.trim();
@@ -165,10 +161,23 @@ router.post('/db', async (req, res) => {
             msg: 'Попробуйте позже.'
         })   
     }
-});
+}
+
+
+
+// CHECK STEP URL
+router.post('/url', async(req, res) => checkValidUrl(req, res));
+
+// CHECK RIGHTS 
+router.post('/rights', async (req, res) => checkRights(req, res));
+
+//CHECK DB CONNECTION
+router.post('/db', async (req, res) => checkDbConnection(req, res));
 
 // Saving app into database
 router.post('/save', async (req, res, next) => {
+
+
     const domainName = req.body.domainName.trim();
     const rights = req.body.checkRights;
     const host = req.body.DBData.host.trim();
