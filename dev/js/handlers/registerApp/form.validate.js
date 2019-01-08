@@ -131,10 +131,10 @@ function regApp(elem) {
                 $('#test-l-1').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 console.log(data);
             } else {
-                App.setDomainName(data.url);
+                App.setDomainName(inputVal);
                 $('#test-l-1').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>'+data.msg+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('.btn-contolls').find('.res-step-1').addClass('d-block');
-                $('.btn-contolls').find('.btnCheckDomainName').addClass('d-none');
+                $('.btn-contolls').find('.btnCheckDomainName').remove();
 
                 // Устанавливаем значения для следующего шага
                 $('#test-l-2').find('.domainName').text(inputVal).attr('href', inputVal);
@@ -239,9 +239,30 @@ function regApp(elem) {
     this.saveData = function(){
         var app = App.getAppObject();
 
+        console.log(app)
+
+        var data = {
+            url: app.domainName,
+            secretKey: app.secretKey,
+            host: app.DBData.host,
+            database: app.DBData.database,
+            user: app.DBData.user,
+            password: app.DBData.password,
+            tableName: app.DBData.tableName,
+            port: app.DBData.port,
+            dbType: app.DBData.DBtype,
+            col_user_id: app.DBData.cols.user_id,
+            col_user_password: app.DBData.cols.user_password,
+            col_user_email: app.DBData.cols.user_email,
+            col_user_phone: app.DBData.cols.user_phone,
+        }
+
+        console.log('THIS IS DATA ')
+        console.log(data)
+
         $.ajax({
             type: 'POST',
-            data: JSON.stringify(app),
+            data: JSON.stringify(data),
             contentType: 'application/json',
             url: '/app/add/save'
         }).done(function (data) {
