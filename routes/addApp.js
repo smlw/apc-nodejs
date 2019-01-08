@@ -76,7 +76,7 @@ const checkDbConnection = async (req, res) => {
     const password = req.body.password.trim();
     const tableName = req.body.tableName.trim();
     const port = req.body.port.trim();
-    const type = req.body.dbType.trim();
+    const type = req.body.dbType.trim().toLowerCase();
 
     // Проверяем, существует ли уже такая же БД
     return new Promise(async (resolve, reject) => {
@@ -91,36 +91,43 @@ const checkDbConnection = async (req, res) => {
             } else {
                 // Connect to DB
                 try {
-                    // DB data
-                    let connection = mysql.createConnection({
-                        host: host,
-                        user: user,
-                        password: password,
-                        tableName: tableName,
-                        database: database,
-                        port: port
-                    });
+                    switch (type) {
+                        case "mysql":
+                            // DB data
+                            let connection = mysql.createConnection({
+                                host: host,
+                                user: user,
+                                password: password,
+                                tableName: tableName,
+                                database: database,
+                                port: port
+                            });
 
-                    // DB conenction
-                    connection.connect(function (err) {
-                        if (err) {
-                            reject(err.code)
-                            connection.end();
-                        } else {
-                            connection.query(`DESCRIBE ${tableName}`, function (err, result) {
+                            // DB conenction
+                            connection.connect(function (err) {
                                 if (err) {
                                     reject(err.code)
+                                    connection.end();
                                 } else {
-                                    let cols = [];
-                                    result.forEach(element => {
-                                        cols.push(element.Field)
+                                    connection.query(`DESCRIBE ${tableName}`, function (err, result) {
+                                        if (err) {
+                                            reject(err.code)
+                                        } else {
+                                            let cols = [];
+                                            result.forEach(element => {
+                                                cols.push(element.Field)
+                                            });
+                                            resolve(cols)
+                                        }
                                     });
-                                    resolve(cols)
-                                }
+                                    connection.end();
+                                };
                             });
-                            connection.end();
-                        };
-                    });
+                            break;
+
+                        default:
+                            break;
+                    }
                 } catch (error) {
                     reject('Ошибка соединения!')
                 }
@@ -197,7 +204,7 @@ router.post('/save', async (req, res) => {
                     callback(err)
                 });
         },
-        function(callback) {
+        function (callback) {
             checkRights(req, res)
                 .then(() => {
                     callback(null, 'Права подтверждены ... Ок')
@@ -234,7 +241,7 @@ router.post('/save', async (req, res) => {
                 const table = req.body.tableName.trim();
                 const port = req.body.port.trim() || '';
                 const dbType = req.body.dbType.trim();
-            
+
                 const col_user_id = req.body.col_user_id.trim();
                 const col_user_password = req.body.col_user_password.trim();
                 const col_user_email = req.body.col_user_email.trim();
