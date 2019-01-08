@@ -229,8 +229,31 @@ function regApp(elem) {
 
         if(validUser_id && validUser_password && validUser_email && validUser_phone){
             App.setDBcol(user_id, user_password, user_email, user_phone);
-            $('.setDBCols').addClass('d-none')
+            // $('.setDBCols').addClass('d-none')
             $('.res-step-4').addClass('d-block')
+
+            var app = App.getAppObject();
+            var iter = 1;
+            function recursive(obj) {
+                for(var key in obj) {
+                    if(typeof obj[key] === 'object') {
+                        recursive(obj[key])
+                    } else {
+                        iter++;
+                        // $('#app-info').find('.field-value-'+iter).text(obj[key])
+                        $('#app-info').append('<div class="">'+obj[key]+'</div>');
+                    }
+                }
+            }
+
+            recursive(app);
+
+
+            // console.log(Object.keys(app))
+
+            // for(var key in app){
+            //     console.log(app[key])
+            // }
         }
 
         console.log(App.getAppObject())
@@ -239,7 +262,7 @@ function regApp(elem) {
     this.saveData = function(){
         var app = App.getAppObject();
 
-        console.log(app)
+        // console.log(app)
 
         var data = {
             url: app.domainName,
@@ -257,8 +280,8 @@ function regApp(elem) {
             col_user_phone: app.DBData.cols.user_phone,
         }
 
-        console.log('THIS IS DATA ')
-        console.log(data)
+        // console.log('THIS IS DATA ')
+        // console.log(data)
 
         $.ajax({
             type: 'POST',
@@ -271,7 +294,7 @@ function regApp(elem) {
                 $('#test-l-5').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             } else {
                 console.log('OKS');
-                $('#test-l-5').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#test-l-5').prepend('<div class="alert alert-success alert-dismissible fade show" role="alert"><strong>Успех! </strong>' + data.msg + ' <a href="/settings/">Перейти в настройки</a><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
             }
         });
     }
