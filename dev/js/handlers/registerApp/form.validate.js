@@ -4,6 +4,8 @@
 // }, "Please specify the correct domain for your documents");
 
 function regApp(elem) {
+    var loader = '<svg width="10px"  height="10px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-rolling" style="background: none;"><circle cx="50" cy="50" fill="none" stroke="#fafafa" stroke-width="10" r="35" stroke-dasharray="164.93361431346415 56.97787143782138" transform="rotate(353.928 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>';
+
     var regForm = $('#register-app_form').validate({
         errorContainer: ".box-messages",
         errorClass: "text-danger",
@@ -125,7 +127,14 @@ function regApp(elem) {
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/app/add/url'
+            url: '/app/add/url',
+            cache: false,
+            beforeSend: function(){
+                $('.btnCheckDomainName').append(loader);
+            },
+            complete: function(){
+                $('.btnCheckDomainName').find('svg').remove();
+            }
         }).done(function (data) {
             if (!data.ok) {
                 $('#test-l-1').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -156,7 +165,14 @@ function regApp(elem) {
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/app/add/rights'
+            url: '/app/add/rights',
+            cache: false,
+            beforeSend: function(){
+                $('.btnCheckRights').append(loader);
+            },
+            complete: function(){
+                $('.btnCheckRights').find('svg').remove();
+            }
         }).done(function (data) {
             if (!data.ok) {
                 $('#test-l-2').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -196,7 +212,14 @@ function regApp(elem) {
             type: 'POST',
             data: JSON.stringify(DBdata),
             contentType: 'application/json',
-            url: '/app/add/db'
+            url: '/app/add/db',
+            cache: false,
+            beforeSend: function(){
+                $('.btncheckDBData').append(loader);
+            },
+            complete: function(){
+                $('.btncheckDBData').find('svg').remove();
+            }
         }).done(function (data) {
             if (!data.ok) {
                 $('#test-l-3').prepend('<div class="alert alert-danger alert-dismissible fade show" role="alert"><strong>Ошибка! </strong>' + data.msg + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -229,9 +252,10 @@ function regApp(elem) {
 
         if(validUser_id && validUser_password && validUser_email && validUser_phone){
             App.setDBcol(user_id, user_password, user_email, user_phone);
-            // $('.setDBCols').addClass('d-none')
+            $('.setDBCols').addClass('d-none')
             $('.res-step-4').addClass('d-block')
 
+            // For display app data on last screen 
             var app = App.getAppObject();
             var iter = 1;
             function recursive(obj) {
@@ -240,20 +264,12 @@ function regApp(elem) {
                         recursive(obj[key])
                     } else {
                         iter++;
-                        // $('#app-info').find('.field-value-'+iter).text(obj[key])
                         $('#app-info').append('<div class="">'+obj[key]+'</div>');
                     }
                 }
             }
 
             recursive(app);
-
-
-            // console.log(Object.keys(app))
-
-            // for(var key in app){
-            //     console.log(app[key])
-            // }
         }
 
         console.log(App.getAppObject())
@@ -287,7 +303,14 @@ function regApp(elem) {
             type: 'POST',
             data: JSON.stringify(data),
             contentType: 'application/json',
-            url: '/app/add/save'
+            url: '/app/add/save',
+            cache: false,
+            beforeSend: function(){
+                $('.btnSaveApp').append(loader);
+            },
+            complete: function(){
+                $('.btnSaveApp').find('svg').remove();
+            }
         }).done(function (data) {
             if (!data.ok) {
                 console.log('FAIL');
