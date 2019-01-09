@@ -7,4 +7,10 @@
 {{/content}}
 {{#content "content"}}
     {{> chunks/auth/auth}}
+
+    {{#content "scripts"}}
+        <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/javascripts/handlers/auth/form.validate.js"></script>
+        <script type="text/javascript" src="/javascripts/alert.js"></script>
+    {{/content}} 
 {{/content}}

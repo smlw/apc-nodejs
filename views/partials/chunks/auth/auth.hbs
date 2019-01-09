@@ -2,44 +2,58 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 mx-auto">
-        <!-- <form class="form-auth  form-signin">
-                    <h1 class="display-6 text-center my-3">Вход</h1>
-                    <div class="form-group my-2">
-                      <label for="inputEmail" class="sr-only">Email address</label>
-                      <input type="email" id="inputEmail" name="authInputEmail" class="form-control" placeholder="Email address" minlength="8" required="">
-                    </div>
-                    <div class="form-group my-2">
-                      <label for="inputPassword" class="sr-only">Password</label>
-                      <input type="password" id="inputPassword" name="authinputPassword" class="form-control" placeholder="Password" minlength="8" required="">
-                    </div>
-                    <div class="checkbox mb-3">
-                      <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                      </label>
-                    </div>
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-                  </form> -->
-        <form class="form-auth form-registartion">
-          <h1 class="display-6 text-center my-3">Регистрация</h1>
-          <div class="form-group my-2">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" name="authInputEmail" class="form-control" placeholder="Email address" minlength="8" required="" >
-          </div>
-          <div class="form-group my-2">
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input type="password" id="inputPassword" name ="authInputPassword" class="form-control" placeholder="Password" minlength="8" required="">
-          </div>
-          <div class="form-group my-2">
-            <label for="inputPassword" class="sr-only">Repeat password</label>
-            <input type="password" id="inputRepeatPassword" name="authInputRepeatPassword" class="form-control" placeholder="Repeat password" minlength="8" required="">
-          </div>
-          <div class="checkbox mb-3">
-            <label>
-              <input type="checkbox" value="remember-me"> Я ознакомлен с <a href="#">правилами</a>
-            </label>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
-        </form>
+        <div id="signinForm">
+          <form action="/auth/signin" method="post" class="form-auth">
+            <h1 class="display-6 text-center my-3">Вход</h1>
+            <div class="form-group my-2">
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Email address"
+                minlength="8" required="">
+            </div>
+            <div class="form-group my-2">
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password"
+                minlength="8" required="">
+            </div>
+            <div class="checkbox mb-3">
+              <label>
+                <input type="checkbox" value="remember-me"> Remember me
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary  btn-block" type="submit">Войти</button>
+          </form>
+        </div>
+
+        {{!--
+
+        <div id="registerForm">
+          <form class="form-auth form-registartion">
+            <h1 class="display-6 text-center my-3">Регистрация</h1>
+            <div class="form-group my-2">
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="email" id="inputEmail" name="authInputEmail" class="form-control" placeholder="Email address"
+                minlength="8" required="">
+            </div>
+            <div class="form-group my-2">
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" id="inputPassword" name="authInputPassword" class="form-control" placeholder="Password"
+                minlength="8" required="">
+            </div>
+            <div class="form-group my-2">
+              <label for="inputPassword" class="sr-only">Repeat password</label>
+              <input type="password" id="inputRepeatPassword" name="authInputRepeatPassword" class="form-control"
+                placeholder="Repeat password" minlength="8" required="">
+            </div>
+            <div class="checkbox mb-3">
+              <label>
+                <input type="checkbox" value="remember-me"> Я ознакомлен с <a href="#">правилами</a>
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
+          </form>
+
+        </div>
+        --}}
       </div>
     </div>
 
