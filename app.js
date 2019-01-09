@@ -63,7 +63,8 @@ app.use(bodyParser.json());
 // ROUTERS
 const routes = require('./routes');
 app.use('/app/add', routes.addApp);
-app.use('/account', routes.account);
+app.use('/auth',    routes.auth);
+app.use('/account',    routes.account);
 
 app.get('/', (req, res) => {
     res.render("index", {

@@ -1,9 +1,10 @@
-{{#extend "layouts/base"}}
+
 {{#content "title"}}
     Регистрация
 {{/content}}
-
+{{#content "styles"}}
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/auth/auth.css' }}">
+{{/content}}
 {{#content "content"}}
     {{> chunks/auth/auth}}
 {{/content}}
-{{/extend}}
