@@ -8,7 +8,6 @@ const expressHbs = require("express-handlebars");
 const layouts = require('express-handlebars-layouts');
 const handlebarsStatic = require('handlebars-static');
 
-const Keygrip = require('keygrip');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
@@ -67,17 +66,12 @@ app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/js/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery-validation/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist'));
-// app.use(session({
-//     secret: 'thisASecret',
-//     saveInitialized: false,
-//     resave: true
-// }));
-app.use(cookieParser());
-app.use(cookieSession({
-    name: 'session',
-    keys: new Keygrip(['key1', 'key2'], 'SHA384', 'base64'),
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+app.use(session({
+    secret: 'thisASecret',
+    saveInitialized: false,
+    resave: false
 }));
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
