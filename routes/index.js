@@ -1,9 +1,9 @@
 const addApp = require('./addApp');
-const auth = require('./auth');
 const account = require('./account');
+const auth = require('./auth');
 
 module.exports = {
     addApp,
-    auth,
-    account
+    account,
+    auth
 }

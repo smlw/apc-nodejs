@@ -8,10 +8,12 @@ const expressHbs = require("express-handlebars");
 const layouts = require('express-handlebars-layouts');
 const handlebarsStatic = require('handlebars-static');
 
+const Keygrip = require('keygrip');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const passport = require('passport');
 const session = require('express-session');
 const models = require('./models')
-
 require('./passport')(passport)
 
 //database
@@ -48,6 +50,12 @@ const hbs = expressHbs.create({
 });
 hbs.handlebars.registerHelper(layouts(hbs.handlebars));
 
+// BODYPARSER
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 // SET & USES
 app.engine("hbs", hbs.engine)
 app.set("view engine", "hbs");
@@ -59,47 +67,33 @@ app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/js/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery-validation/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist'));
-app.use(session({
-    secret: 'thisASecret',
-    saveInitialized: false,
-    resave: false
+// app.use(session({
+//     secret: 'thisASecret',
+//     saveInitialized: false,
+//     resave: true
+// }));
+app.use(cookieParser());
+app.use(cookieSession({
+    name: 'session',
+    keys: new Keygrip(['key1', 'key2'], 'SHA384', 'base64'),
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
 }));
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
-
-// BODYPARSER
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.use(bodyParser.json());
 
 // ROUTERS
-const auth = require('./routes/auth')(passport);
 const routes = require('./routes');
-app.use('/app/add', routes.addApp);
-app.use('/account', routes.account);
-app.use('/auth', auth);
+// Check authentication
+const loggedin = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
+app.use('/app/add', loggedin, routes.addApp);
+app.use('/account', loggedin, routes.account);
+app.use('/auth',    routes.auth(passport));
 
-
-app.get('/', (req, res) => {
-    res.render("index", {
-        layout: 'base'
-    })
-});
-
-const loggedin = function (req, res, next){
-    if(req.isAuthenticated()){
-        next()
-    } else {
-        res.redirect('/login')
-    }
-}
-
-app.get('/logout', function(req, res) {
+app.get('/logout', function (req, res) {
     req.logout();
-    res.redirect('/')
-})
+    res.redirect('/');
+});
 
 app.get('/login', (req, res) => {
     res.render('login')
@@ -110,6 +104,11 @@ app.get('/signup', (req, res) => {
 });
 
 
+app.get('/', (req, res) => {
+    res.render("index", {
+        layout: 'base'
+    })
+});
 
 // SERVER
 spdy
@@ -126,8 +125,5 @@ spdy
         console.log('Listening on port: ' + 8000 + '.');
         /* eslint-enable no-console */
     });
-
-
-// DATABASE
 
 module.exports = app;
