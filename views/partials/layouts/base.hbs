@@ -14,7 +14,11 @@
 <!--<div class="progress"></div>-->
 <div class="main-content--wrap">
 
-    {{> header }}
+    {{#if user}}
+        {{> header-auth }}
+    {{else}}
+        {{> header }}
+    {{/if}}
 
     <div class="content"><!-- dynamic content of every page -->
 

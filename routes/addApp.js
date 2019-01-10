@@ -7,7 +7,7 @@ const request = require('request');
 const async = require('async');
 
 router.get('/', (req, res) => {
-    res.render('addApp');
+    res.render('addApp', {user: req.user});
 });
 
 // CHECK VALID URL
