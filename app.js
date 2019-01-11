@@ -67,14 +67,17 @@ app.use('/javascripts', express.static(__dirname + '/node_modules/jquery/dist'))
 app.use('/javascripts', express.static(__dirname + '/node_modules/bootstrap/js/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/jquery-validation/dist'));
 app.use('/javascripts', express.static(__dirname + '/node_modules/popper.js/dist'));
+app.use(cookieParser());
 app.use(session({
     secret: 'thisASecret',
     saveInitialized: false,
-    resave: false
+    resave: false,
+    cookie: {
+        maxAge: 60000
+    }
 }));
-app.use(cookieParser());
-app.use(passport.initialize());
 app.use(flash());
+app.use(passport.initialize());
 app.use(passport.session());
 
 
@@ -84,7 +87,7 @@ const routes = require('./routes');
 const loggedin = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 app.use('/app/add', loggedin, routes.addApp);
 app.use('/account', loggedin, routes.account);
-app.use('/auth',    routes.auth(passport));
+app.use('/auth', routes.auth(passport));
 
 app.get('/logout', function (req, res) {
     req.logout();
@@ -93,7 +96,8 @@ app.get('/logout', function (req, res) {
 
 app.get('/login', (req, res) => {
     res.render('login', {
-        user : req.user, error : req.flash('error')
+        user: req.user,
+        message: req.flash('message')
     })
 });
 

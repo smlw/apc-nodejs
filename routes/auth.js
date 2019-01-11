@@ -44,9 +44,10 @@ module.exports = (passport) => {
     });
 
     router.post('/login', passport.authenticate('local', {
-        failureRedicrect: '/login',
+        failureRedirect: '/login',
         successRedirect: '/account',
-    }))
+        failureFlash: true
+    }));
 
     return router
 };

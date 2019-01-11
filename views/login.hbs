@@ -1,12 +1,26 @@
-
 {{#content "title"}}
-    Логин
+Логин
 {{/content}}
 
 {{#content "content"}}
-    <form action="/auth/login" method="post">
-            <input type="text" name="username">
-            <input type="password" name="password">
-            <input type="submit" name="login">
-    </form>
+<div class="d-flex align-self-center d-flex align-items-center auth">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mx-auto">
+                {{#if message}}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Ошибка! </strong>{{message}}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {{/if}}
+                {{> chunks/login/login}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/content}}
+{{#content "scripts"}}
+    <script type="text/javascript" src="/javascripts/alert.js"></script>
 {{/content}} 

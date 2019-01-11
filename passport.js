@@ -3,28 +3,35 @@ const models = require('./models');
 
 
 module.exports = (passport) => {
-    passport.serializeUser((user, done) => {
-        done(null, user)
-    });
-    passport.deserializeUser((user, done) => {
-        done(null, user)
-    });
-
+    passport.serializeUser(function(user, cb) {
+        cb(null, user.id);
+      });
+      
+      passport.deserializeUser(function(id, cb) {
+        models.User.findById(id, function (err, user) {
+          if (err) { return cb(err); }
+          cb(null, user);
+        });
+      });
+      
     passport.use(new LocalStrategy(
-        function (username, password, cb) {
+        {
+            usernameField: 'login_email',
+            passwordField: 'login_password',
+            passReqToCallback: true
+        },
+        function (req, email, password, cb) {
             models.User.findOne({
-                login: username
+                email: email
             }, function (err, user) {
                 if (err) {
-                    return cb(err);
+                    return cb(err, req.flash('message', 'Попробуйте позже!'));
                 }
-                if (!user) {
-                    return cb(null, false);
+                if (!user || !user.comparePassword(password, user.password)) {
+                    return cb(null, false, req.flash('message', 'Неверный логин и/или пароль!'));
+                } else {
+                    return cb(null, user)
                 }
-                if (user.comparePassword(password, user.password)) {
-                    return cb(null, user);
-                }
-                return cb(null, false);
             });
         }));
 }
