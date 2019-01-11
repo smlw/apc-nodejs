@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs')
 
 const schema = new Schema({
-    login       : {type: String, required: false},
-    email       : {type: String, required: false},
-    password    : {type: String, required: false},
+    email       : {type: String, required: true},
+    password    : {type: String, required: true},
     security    : {type: Boolean, default: false},
+    verifyEmail : {type: Boolean, default: false},
     appsCount   : {type: Number, default: 0}
 }, {
     timestamps: true

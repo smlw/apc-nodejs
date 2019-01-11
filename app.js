@@ -12,7 +12,8 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 const session = require('express-session');
-const models = require('./models')
+const models = require('./models');
+const flash = require('connect-flash');
 require('./passport')(passport)
 
 //database
@@ -73,6 +74,7 @@ app.use(session({
 }));
 app.use(cookieParser());
 app.use(passport.initialize());
+app.use(flash());
 app.use(passport.session());
 
 
@@ -90,7 +92,9 @@ app.get('/logout', function (req, res) {
 });
 
 app.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {
+        user : req.user, error : req.flash('error')
+    })
 });
 
 app.get('/signup', (req, res) => {

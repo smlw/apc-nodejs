@@ -1,0 +1,24 @@
+<div id="signup_form">
+<form class="form-auth" method="post" onsubmit="return false">
+    <h1 class="display-6 text-center my-3">Регистрация</h1>
+    <div class="box-message"></div>
+    <div class="form-group my-2">
+        <label for="signup_email" class="sr-only">Email address</label>
+        <input type="email" id="signup_email" name="signup_email" class="form-control" placeholder="Email address">
+    </div>
+    <div class="form-group my-2">
+        <label for="signup_password" class="sr-only">Password</label>
+        <input type="password" id="signup_password" name="signup_password" class="form-control" placeholder="Password">
+    </div>
+    <div class="form-group my-2">
+        <label for="signup_repassword" class="sr-only">Repeat password</label>
+        <input type="password" id="signup_repassword" name="signup_repassword" class="form-control" placeholder="Repeat password">
+    </div>
+    <div class="checkbox mb-3">
+        <label>
+            <input type="checkbox" value="remember-me"> Я ознакомлен с <a href="#">правилами</a>
+        </label>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" data-action="sendSignupForm">Регистрация</button>
+</form>
+</div>

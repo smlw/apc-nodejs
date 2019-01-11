@@ -1,12 +1,26 @@
-
 {{#content "title"}}
-    Регистрация
+Регистрация
 {{/content}}
 
 {{#content "content"}}
-    <form action="/auth/signup" method="post">
-            <input type="text" name="username">
-            <input type="password" name="password">
-            <input type="submit" name="login">
-    </form>
+<div class="d-flex align-self-center d-flex align-items-center auth">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mx-auto">
+                {{> chunks/signup/signup}}
+                {{!-- <form action="/auth/signup" method="post">
+                    <input type="text" name="username">
+                    <input type="password" name="password">
+                    <input type="submit" name="login">
+                </form> --}}
+            </div>
+        </div>
+    </div>
+</div>
+{{/content}}
+{{#content "scripts"}}
+    <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/javascripts/handlers/auth/form.validate.js"></script>
+    <script type="text/javascript" src="/javascripts/alert.js"></script>
+
 {{/content}} 
