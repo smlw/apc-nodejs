@@ -1,6 +1,7 @@
 <div class="account-content-item__title border-bottom">
     <h2>Настройки сайтов</h2>
 </div>
+
 <div class="account-content-item border-bottom">
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_lattice d-none d-md-block">#</div>
@@ -21,14 +22,14 @@
                     Статус
                 </span>
             </div>
-            <div class="d-none d-md-block">
+            {{!-- <div class="d-none d-md-block">
                 <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-person-people">
                     <use xlink:href="img/svg/sprite.svg#si-glyph-person-people" />
                 </svg>
                 <span>
                     Пользователи
                 </span>
-            </div>
+            </div> --}}
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-wrench-screwdriver">
                     <use xlink:href="img/svg/sprite.svg#si-glyph-wrench-screwdriver" />
@@ -40,42 +41,62 @@
         </div>
     </div>
 </div>
+
+{{#each apps}}
 <div class="account-content-item border-bottom">
     <div class="account-content-item__line d-flex justify-content-start">
-        <div class="account-content-item__line_lattice d-none d-md-block">1</div>
-        <div class="account-content-item__line_label"><a href="https://getbootstrap.com">https://getbootstrap.com</a></div>
+        <div class="account-content-item__line_lattice d-none d-md-block">{{@index}}</div>
+        <div class="account-content-item__line_label"><a href="{{domain}}">{{domain}}</a></div>
         <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="text-success">Активен</div>
-            <div class="d-none d-md-block">38</div>
-            <div>
-                {{> chunks/account/partials/dropdown}}
+            {{#if isActive}}
+            <div class="text-success">Активно</div>
+            {{else}}
+            <div class="text-warning">Не активно</div>
+            {{/if}}
+
+
+            <div class="btn-group dropleft">
+                <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Действия
+                </span>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-pause">
+                            <use xlink:href="img/svg/sprite.svg#si-glyph-pause" />
+                        </svg>
+                        <span>
+                            Приостановить
+                        </span>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-edit">
+                            <use xlink:href="img/svg/sprite.svg#si-glyph-edit" />
+                        </svg>
+                        <span>
+                            Редактировать
+                        </span>
+                    </a>
+                    <a class="dropdown-item" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-document-bullet-list">
+                            <use xlink:href="img/svg/sprite.svg#si-glyph-document-bullet-list" />
+                        </svg>
+                        <span>
+                            Логи
+                        </span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-delete">
+                            <use xlink:href="img/svg/sprite.svg#si-glyph-delete" />
+                        </svg>
+                        <span>
+                            Удалить
+                        </span>
+                    </a>
+                </div>
             </div>
+
         </div>
     </div>
 </div>
-<div class="account-content-item border-bottom">
-    <div class="account-content-item__line d-flex justify-content-start">
-        <div class="account-content-item__line_lattice d-none d-md-block">2</div>
-        <div class="account-content-item__line_label"><a href="https://translate.google.ru">https://translate.google.ru</a></div>
-        <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="text-warning">Приостановлен</div>
-            <div class="d-none d-md-block">10</div>
-            <div>
-                {{> chunks/account/partials/dropdown}}
-            </div>
-        </div>
-    </div>
-</div>
-<div class="account-content-item border-bottom">
-    <div class="account-content-item__line d-flex justify-content-start">
-        <div class="account-content-item__line_lattice d-none d-md-block">3</div>
-        <div class="account-content-item__line_label"><a href="http://htmlbook.ru">http://htmlbook.ru</a></div>
-        <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="text-danger">Не активен</div>
-            <div class="d-none d-md-block">0</div>
-            <div>
-                {{> chunks/account/partials/dropdown}}
-            </div>
-        </div>
-    </div>
-</div>
+{{/each}}
