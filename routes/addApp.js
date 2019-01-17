@@ -233,6 +233,7 @@ router.post('/save', async (req, res) => {
         } else if (results) {
             console.log(results)
             try {
+                const userId = req.user.id;
                 const url = req.body.url.trim();
                 const host = req.body.host.trim();
                 const database = req.body.database.trim();
@@ -248,7 +249,7 @@ router.post('/save', async (req, res) => {
                 const col_user_phone = req.body.col_user_phone.trim();
 
                 const newApp = await models.App.create({
-                    owner: 'owner',
+                    owner: userId,
                     domain: url,
                     dbHost: host,
                     dbName: database,

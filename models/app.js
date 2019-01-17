@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    owner:              { type: String, required: true },
+    owner:              { type: Schema.Types.ObjectId, required: true },
     domain:             { type: String, required: true },
     dbHost:             { type: String, required: true },
     dbName:             { type: String, required: true },
