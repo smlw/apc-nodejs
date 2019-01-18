@@ -86,6 +86,7 @@ const routes = require('./routes');
 // Check authentication
 const loggedin = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 app.use('/app/add', loggedin, routes.addApp);
+app.use('/app/edit', loggedin, routes.editApp);
 app.use('/account', loggedin, routes.account);
 app.use('/auth', routes.auth(passport));
 

@@ -3,14 +3,14 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">Хост:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">http://hostname</div>
+            <div class="account-content-item__line_data ">{{app.dbHost}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
         </div>
         <div class="account-content-item__line_actions d-none justify-content-between setting_change_block">
             <div class="account-content-item__line_settings">
-                <input class="form-control form-control-sm" type="text" placeholder="DB Host" value="http://hostname">
+                <input class="form-control form-control-sm" type="text" placeholder="DB Host" value="{{app.dbHost}}">
                 <button type="button" class="btn btn-primary btn-sm my-2">Сохранить</button>
             </div>
             <div class="account-content-item__line_action">
@@ -23,14 +23,14 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">DB User</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">username</div>
+            <div class="account-content-item__line_data ">{{app.dbUser}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
         </div>
         <div class="account-content-item__line_actions d-none justify-content-between setting_change_block">
             <div class="account-content-item__line_settings">
-                <input class="form-control form-control-sm" type="text" placeholder="DB User" value="username">
+                <input class="form-control form-control-sm" type="text" placeholder="DB User" value="{{app.dbUser}}">
                 <button type="button" class="btn btn-primary btn-sm my-2">Сохранить</button>
             </div>
             <div class="account-content-item__line_action">
@@ -43,7 +43,7 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">DB Password</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">************</div>
+            <div class="account-content-item__line_data ">{{app.dbPassword}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
@@ -64,7 +64,7 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">DB user table</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">************</div>
+            <div class="account-content-item__line_data ">{{app.dbTable}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
@@ -85,14 +85,14 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">DB Port</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">8000</div>
+            <div class="account-content-item__line_data ">{{app.dbPort}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
         </div>
         <div class="account-content-item__line_actions d-none justify-content-between setting_change_block">
             <div class="account-content-item__line_settings">
-                <input class="form-control form-control-sm my-2" type="text" placeholder="8000">
+                <input class="form-control form-control-sm my-2" type="text" placeholder="{{app.dbPort}}">
                 <button type="button" class="btn btn-primary btn-sm my-2">Сохранить</button>
             </div>
             <div class="account-content-item__line_action">
@@ -105,7 +105,7 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">DB Type:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data ">MySQL</div>
+            <div class="account-content-item__line_data ">{{app.dbType}}</div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>

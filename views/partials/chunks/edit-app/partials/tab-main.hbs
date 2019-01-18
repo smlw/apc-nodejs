@@ -1,9 +1,9 @@
-<h2>Настройки сайта <a href="http://mysite.ru">http://mysite.ru</a></h2>
+<h2>Настройки сайта <a href="{{app.domain}}">{{app.domain}}</a></h2>
 <div class="account-content-item border-bottom">
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">Домен:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="account-content-item__line_data"><a href="http://mysite.ru">http://mysite.ru</a></div>
+            <div class="account-content-item__line_data"><a href="{{app.domain}}">{{app.domain}}</a></div>
         </div>
     </div>
 </div>
@@ -11,7 +11,13 @@
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">Статус APC:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
-            <div class="account-content-item__line_data "><span class="text-success">Активно</span></div>
+            <div class="account-content-item__line_data ">
+            {{#if app.isActive}}
+                <span class="text-success">Активно</span>
+            {{else}}
+                <span class="text-warning">Не активно</span>
+            {{/if}}
+                </div>
             <div class="account-content-item__line_action">
                 <a href="#" class="setting_info_block_button">Изменить</a>
             </div>
