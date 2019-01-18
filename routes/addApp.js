@@ -5,6 +5,8 @@ const models = require('../models');
 const cheerio = require('cheerio');
 const request = require('request');
 const async = require('async');
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA({b: 512});
 
 router.get('/', (req, res) => {
     res.render('addApp', {user: req.user});
@@ -248,14 +250,15 @@ router.post('/save', async (req, res) => {
                 const col_user_email = req.body.col_user_email.trim();
                 const col_user_phone = req.body.col_user_phone.trim();
 
+                // console.log(key)
                 const newApp = await models.App.create({
                     owner: userId,
-                    domain: url,
-                    dbHost: host,
-                    dbName: database,
-                    dbUser: user,
-                    dbPassword: password,
-                    dbTable: table,
+                    domain:     key.encrypt(url, 'base64'),
+                    dbHost:     key.encrypt(host, 'base64'),
+                    dbName:     key.encrypt(database, 'base64'),
+                    dbUser:     key.encrypt(user, 'base64'),
+                    dbPassword: key.encrypt(password, 'base64'),
+                    dbTable:    key.encrypt(table, 'base64'),
                     dbPort: port,
                     dbType: dbType,
                     colUserId: col_user_id,
@@ -284,108 +287,6 @@ router.post('/save', async (req, res) => {
             }
         }
     });
-
-
-
-    // if(!url || (url.length < 6 || url.length > 60) ){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Проверьте поле домена!',
-    //     });
-    // } else if (!rights) {
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Не подтверждены права на сайт!'
-    //     });
-    // } else if (!host || !database || !user || !password || !table || !type){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Проверьте правильность полей базы данных. Проверьте соединение!'
-    //     });
-    // } else if (host.length < 6 || host.length > 60) {
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Длина хоста от 4 до 64 символов!'
-    //     });
-    // } else if (database.length < 1 || database.length > 60){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Длина имени базы данных от 1 до 64 символов!'
-    //     });
-    // } else if (user.length < 2 || user.length > 60){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Длина имени пользователя БД от 1 до 64 символов!'
-    //     });
-    // } else if (password.length < 8){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Длина пароля от 8 симоволов'
-    //     });
-    // } else if (table.length < 2 || table.length > 60){
-    //     res.json({
-    //         ok: false,
-    //         error: 'Отказано. Длина таблцы БД от 2 до 64 символов!'
-    //     });
-    // } else if (port && Number.isInteger(port)){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Отказано. Проверьте порт подключения!'
-    //     });
-    // } else if (!col_user_id || !col_user_password || !col_user_email || !col_user_phone){
-    //     res.json({
-    //         ok: false,
-    //         msg: 'Проверьте правильность полей для колонок!'
-    //     });
-    // } else {
-    //     // создаем запись в нашей БД
-    //     const check = await models.App.findOne({
-    //         dbHost: host
-    //     });
-
-    //     if(check){
-    //         res.json({
-    //             ok: false,
-    //             msg: 'Приложение уже зарегистрировано!'
-    //         });
-    //     } else {
-    //         try {
-    //             const app = await models.App.create({
-    //                 owner: 'owner',
-    //                 domain : url,
-    //                 dbHost: host,
-    //                 dbName: database,
-    //                 dbUser: user,
-    //                 dbPassword: password,
-    //                 dbTable: table,
-    //                 dbPort: port,
-    //                 dbType: type,
-    //                 colUserId: col_user_id,
-    //                 colUserPassword: col_user_password,
-    //                 colUserEmail: col_user_email,
-    //                 colUserPhone: col_user_phone
-    //             });
-
-    //             if(app){
-    //                 res.json({
-    //                     ok: true,
-    //                     msg: 'Приложение было успешно зарегистрировано!'
-    //                 })
-    //             } else {
-    //                 res.json({
-    //                     ok: false,
-    //                     msg: 'Настройки не сохранены! Повторите позже!'
-    //                 });
-    //             }
-
-    //         } catch (error) {
-    //             res.json({
-    //                 ok: false,
-    //                 msg: 'Повторите позже!'
-    //             });
-    //         }
-    //     }
-    // }
 })
 
 module.exports = router;

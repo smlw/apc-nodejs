@@ -316,7 +316,7 @@ asap@~2.0.3:
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
   integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
 
-asn1@~0.2.3:
+asn1@^0.2.4, asn1@~0.2.3:
   version "0.2.4"
   resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.4.tgz#8d2475dfab553bb33e77b54e59e880bb8ce23136"
   integrity sha512-jxwzQpLQjSmWXgwaCZE9Nz+glAG01yF1QnWgbhGwHI5A6FRIEY6IVqtHhIepHqI7/kyEyQEagBC5mBEFlIYvdg==
@@ -3792,6 +3792,13 @@ node-pre-gyp@^0.10.0:
     rimraf "^2.6.1"
     semver "^5.3.0"
     tar "^4"
+
+node-rsa@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/node-rsa/-/node-rsa-1.0.2.tgz#142b75907fee8f494876f9e6187d1f7c07c107ac"
+  integrity sha512-2Uf7rermLy0tfm74QGXUJwWd7/YiRKIgGIiezC2Ya7DL2S/ej6zkUCpMg7wAOoS0PXGk/vl77fkHitpiW4nErA==
+  dependencies:
+    asn1 "^0.2.4"
 
 node-sass@^4.8.3:
   version "4.11.0"
