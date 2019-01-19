@@ -1,3 +1,4 @@
+const config = require('./config');
 const spdy = require('spdy');
 const express = require('express');
 const path = require('path');
@@ -16,12 +17,11 @@ const models = require('./models');
 const flash = require('connect-flash');
 require('./passport')(passport)
 
-//database
-const mongoose = require('mongoose');
-// const config = require('./config');
+const app = express();
 
+// DATABASE
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-// mongoose.set('debug', config.IS_PRODUCTION);
 
 mongoose.connection
     .on('error', error => console.log(error))
@@ -29,13 +29,9 @@ mongoose.connection
     .once('open', () => {
         const info = mongoose.connections[0];
         console.log(`Connected to ${info.host}:${info.port}/${info.name}`);
-        // require('./mocks')();
     });
 
-mongoose.connect('mongodb://127.0.0.1:27017/apc');
-
-
-const app = express();
+mongoose.connect(config.MONGO_URL);
 
 // VIEW ENGINE
 const staticUrl = '/';
@@ -83,6 +79,7 @@ app.use(passport.session());
 
 // ROUTERS
 const routes = require('./routes');
+
 // Check authentication
 const loggedin = (req, res, next) => req.isAuthenticated() ? next() : res.redirect('/login')
 app.use('/app/add', loggedin, routes.addApp);
@@ -125,7 +122,7 @@ spdy
         }
 
         /* eslint-disable no-console */
-        console.log('Listening on port: ' + 8000 + '.');
+        console.log(`Listening on port: ${config.PORT}`);
         /* eslint-enable no-console */
     });
 
