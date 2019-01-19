@@ -5,7 +5,7 @@ const config = require('../config');
 const NodeRSA = require('node-rsa');
 const key = new NodeRSA(config.PRIVATE_KEY); 
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
 
     // Id of app & user
     const id = req.params.id.trim().replace(/ +(?= )/g, '');
@@ -20,9 +20,7 @@ router.get('/:id', async (req, res) => {
 
         // If !app return status code 404
         if (!app) {
-            const err = new Error('Not Found');
-            err.status = 404;
-            next(err);
+            res.send(404)
         }
 
         // Render view with app-object
@@ -40,13 +38,10 @@ router.get('/:id', async (req, res) => {
         })
 
     } catch (error) {
-        res.json({
-            ok: false,
-            msg: 'Попробуйте позже'
-        })
+        res.status(500)
     }
 
 
 });
 
-module.exports = router;
+module.exports = router; 
