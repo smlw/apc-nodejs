@@ -5,13 +5,14 @@ const models = require('../models');
 const cheerio = require('cheerio');
 const request = require('request');
 const async = require('async');
+const config = require('../config');
 const NodeRSA = require('node-rsa');
-const key = new NodeRSA({b: 512});
+const key = new NodeRSA(config.PRIVATE_KEY); 
 
 router.get('/', (req, res) => {
     res.render('addApp', {user: req.user});
 });
-
+ 
 // CHECK VALID URL
 const checkValidUrl = async (req, res) => {
 
