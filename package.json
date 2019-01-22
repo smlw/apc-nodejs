@@ -44,6 +44,7 @@
     "express-handlebars-layouts": "^1.0.0",
     "express-session": "^1.15.6",
     "fs": "^0.0.1-security",
+    "generate-password": "^1.4.1",
     "gulp-minify-css": "^1.2.4",
     "handlebars-static": "^2.0.2",
     "hbs": "^4.0.1",
