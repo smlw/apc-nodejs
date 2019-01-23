@@ -6,9 +6,6 @@ const passGen = require('./passGen')
 const key = new NodeRSA(config.PRIVATE_KEY);
 
 module.exports = async () => {
-    // const foo = passGen(18, true, true, true, true, false, false)
-    // console.log(foo)
-
     try {
         // Query to get apps from database
         const apps = await models.App.find({
@@ -43,9 +40,26 @@ module.exports = async () => {
                     } else {
                         connection.query(`SELECT * FROM apc_users WHERE isActive = 1`, function (err, result) {
                             if (!err) {
-                                result.forEach(user => {
-                                    console.log(user)
-                                })
+                                result.forEach(u => {
+                                    // func to converting 1/0 to true/false
+                                    convertBool = (param) => param === 1 ? true : false;
+
+                                    // 1. Генерируем пароль
+                                    // 2. Отсылаем его на почту
+                                    // 3. Если отправлено было удачно, то меняем в базе данных
+
+                                    // Generate new password with user settings
+                                    const newPassword = passGen(
+                                            u.length, 
+                                            convertBool(u.numbers), 
+                                            convertBool(u.symbols), 
+                                            convertBool(u.uppersace), 
+                                            convertBool(u.excludeSimilarCharacters), 
+                                            u.exclude, 
+                                            convertBool(u.strict))
+
+                                    console.log(newPassword)
+                                }) 
                             } else {
                                 reject(err.code)
                             }
