@@ -9,4 +9,8 @@ module.exports = {
     PRIVATE_KEY: process.env.PRIVATE_KEY,
     PORT: process.env.PORT,
     MONGO_URL: process.env.MONGO_URL,
+    EMAIL: {
+        LOGIN: process.env.EMAIL,
+        PASSWORD: process.env.PASSWORD,
+    }
 }
