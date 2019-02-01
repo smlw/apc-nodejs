@@ -5,6 +5,8 @@ const mysql = require('mysql');
 const passGen = require('./passGen')
 const key = new NodeRSA(config.PRIVATE_KEY);
 const nodemailer = require('nodemailer');
+const PasswordHash = require('phpass').PasswordHash;
+const passwordHash = new PasswordHash();
 
 module.exports = async () => {
     try {
@@ -57,6 +59,8 @@ module.exports = async () => {
                                         u.exclude,
                                         convertBool(u.strict))
 
+                                    const hashNewPassword = passwordHash.hashPassword(newPassword);
+                                    console.log(hashNewPassword)
                                     // 2. Отсылаем его на почту
                                     // NODE-MAILER
                                     const transporter = nodemailer.createTransport({
@@ -87,7 +91,7 @@ module.exports = async () => {
                                             return console.log(error);
                                         } else {
                                             // 3. Если отправлено было удачно, то меняем в базе данных
-                                            connection.query(`UPDATE ${app.dbTable} SET ${app.colUserPassword} = '${newPassword}' WHERE ${app.colUserId} = ${u.id}`, function (err, result) {
+                                            connection.query(`UPDATE ${app.dbTable} SET ${app.colUserPassword} = '${hashNewPassword}' WHERE ${app.colUserId} = ${u.id}`, function (err, result) {
                                             // connection.query(`SELECT * FROM wercs_users`, function (err, result) {
                                                 if (err) throw err;
                                                 console.log(result);

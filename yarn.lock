@@ -4298,6 +4298,11 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+phpass@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/phpass/-/phpass-0.1.1.tgz#5626676d11e2feb7a4b5daedb34e5f7598df80b5"
+  integrity sha1-ViZnbRHi/rektdrts05fdZjfgLU=
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
