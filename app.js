@@ -86,6 +86,7 @@ const loggedin = (req, res, next) => req.isAuthenticated() ? next() : res.redire
 app.use('/app/add', loggedin, routes.addApp);
 app.use('/app/edit', loggedin, routes.editApp);
 app.use('/account', loggedin, routes.account);
+app.use('/instruction', routes.instruction);
 app.use('/auth', routes.auth(passport));
 
 app.get('/logout', function (req, res) {

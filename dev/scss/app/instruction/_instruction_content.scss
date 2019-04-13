@@ -1,0 +1,24 @@
+.account-content{
+  width: 100%;
+  padding: 20px
+}
+.account-content img {
+  width: 100%;
+  border: 1px solid #ccc
+}
+
+.instruction_content_caption{
+  text-align: center;
+  font-style: italic;
+  margin-top: -15px;
+}
+
+.instruction_content_cursive{
+  font-style: italic;
+}
+
+.instruction_content_wrapper{
+  ul li{
+    list-style: circle;
+  }
+}

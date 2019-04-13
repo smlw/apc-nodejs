@@ -1,0 +1,22 @@
+
+{{#content "title"}}
+    Инструкция
+{{/content}}
+{{#content "styles"}}
+    <link rel="stylesheet" href="{{ static '/stylesheets/app/instruction/instruction.css' }}">
+{{/content}}
+
+{{#content "content"}}
+    {{#extend "layouts/lk-layout"}}
+        {{#content "lk-menu"}}
+            {{> chunks/instruction/instruction-menu}}
+        {{/content}}
+        {{#content "lk-content"}}
+            {{> chunks/instruction/instruction-content}}
+        {{/content}}
+    {{/extend}}
+    {{#content "scripts"}}
+        <script type="text/javascript" src="/javascripts/tab.js"></script>
+        <script type="text/javascript" src="/javascripts/collapse.js"></script>
+    {{/content}} 
+{{/content}}
