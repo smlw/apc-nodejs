@@ -57,6 +57,7 @@
     "mysql": "^2.16.0",
     "node-rsa": "^1.0.2",
     "nodemailer": "^5.1.1",
+    "password-hash": "^1.2.2",
     "phpass": "^0.1.1",
     "popper.js": "^1.14.6",
     "request": "^2.88.0",

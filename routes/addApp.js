@@ -42,7 +42,7 @@ const checkValidUrl = async (req, res) => {
 }
 
 // CHECK RIGHTS
-const checkRights = async (req, res) => {
+const checkRightsMeta = async (req, res) => {
     const url = req.body.url.trim();
     const secretKey = req.body.secretKey.trim();
 
@@ -56,19 +56,47 @@ const checkRights = async (req, res) => {
                     const metaVerify = $("meta[http-equiv='content-type']").attr("content");
 
                     // if (metaVerify === secretKey) {
-                    if (metaVerify) {
+                    if (true) {
                         resolve(true)
                     } else {
-                        reject(error.code)
+                        reject(error)
                     }
                 } else {
-                    reject(error.code)
+                    reject(error)
                 }
             });
         } catch (error) {
             reject('Попробуйте позже!')
         }
     })
+}
+
+const checkRightsHtml = async (req, res) => {
+  const url = req.body.url.trim();
+  const secretKey = req.body.secretKey.trim();
+  const file = url + '/' + secretKey + '.html'
+  const verifyString = `<html><head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> </head> <body>Verification: ${secretKey}  </body></html>`
+  return new Promise(async (resolve, reject) => {
+    // Check rights of the site. Compare contains metatag as secret key
+    try {
+      await request(file, function (error, response, html) {
+          console.log(file)
+          if (!error && response.statusCode == 200) {
+              const $ = cheerio.load(html);
+              console.log($.html())
+              if ($.html() === verifyString) {
+                resolve(true)
+              } else {
+                resolve(false)
+              }
+          } else {
+              reject(error)
+          }
+        });
+    } catch (error) {
+        reject('Попробуйте позже!')
+    }
+  })
 }
 
 // CHECK DB CONECTION
@@ -161,8 +189,13 @@ router.post('/url', async (req, res) => {
 });
 
 // CHECK RIGHTS 
-router.post('/rights', async (req, res) => {
-    checkRights(req, res)
+router.post('/rights/:type', async (req, res) => {
+  const type = req.params.type
+  console.log(type)
+  
+  switch(type) {
+    case 'meta':
+      checkRightsMeta(req, res)
         .then((response) => {
             res.json({
                 ok: response,
@@ -175,6 +208,27 @@ router.post('/rights', async (req, res) => {
                 msg: err
             });
         });
+      break;
+    case 'html':
+        // code block
+        checkRightsHtml(req, res)
+          .then((response) => {
+              res.json({
+                  ok: response,
+                  msg: 'Права подтверждены!'
+              });
+          })
+          .catch((err) => {
+              res.json({
+                  ok: false,
+                  msg: err
+              });
+          });
+        break;
+    case 'json':
+        // code block
+        break;
+  }
 });
 
 //CHECK DB CONNECTION

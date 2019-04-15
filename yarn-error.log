@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Alexander\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add cookieParser cookieSession
+  C:\Program Files\nodejs\node.exe C:\Users\Alexander\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add node-password-hash
 
 PATH: 
-  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;E:\Apps\Microsoft VS Code\bin;E:\Apps\Git\cmd;C:\Program Files\wget;E:\Apps\nvm;C:\Program Files\nodejs;C:\Users\Alexander\AppData\Local\Microsoft\WindowsApps;C:\Users\Alexander\AppData\Roaming\npm;E:\Apps\Heroku\bin;E:\Apps\nvm;C:\Program Files\nodejs
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;E:\Apps\Microsoft VS Code\bin;E:\Apps\Git\cmd;C:\Program Files\wget;E:\Apps\nvm;C:\Program Files\nodejs;C:\Users\Alexander\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\Alexander\AppData\Local\Programs\Python\Python37-32\;C:\Users\Alexander\AppData\Local\Microsoft\WindowsApps;C:\Users\Alexander\AppData\Roaming\npm;E:\Apps\Heroku\bin;E:\Apps\nvm;C:\Program Files\nodejs
 
 Yarn version: 
   1.12.3
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/cookieParser: Not found
+  Error: https://registry.yarnpkg.com/node-password-hash: Not found
       at Request.params.callback [as _callback] (C:\Users\Alexander\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:65894:18)
       at Request.self.callback (C:\Users\Alexander\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129018:22)
       at Request.emit (events.js:182:13)
@@ -64,21 +64,29 @@ npm manifest:
       "bootstrap": "^4.2.1",
       "cheerio": "^1.0.0-rc.2",
       "connect-flash": "^0.1.1",
+      "cookie-parser": "^1.4.3",
+      "cookie-session": "^2.0.0-beta.3",
+      "dotenv": "^6.2.0",
       "ejs": "^2.6.1",
       "express": "5.0.0-alpha.2",
       "express-handlebars": "^3.0.0",
       "express-handlebars-layouts": "^1.0.0",
       "express-session": "^1.15.6",
       "fs": "^0.0.1-security",
+      "generate-password": "^1.4.1",
       "gulp-minify-css": "^1.2.4",
       "handlebars-static": "^2.0.2",
       "hbs": "^4.0.1",
       "http2": "^3.3.7",
       "jquery": "^3.3.1",
       "jquery-validation": "^1.19.0",
+      "keygrip": "^1.0.3",
       "mongo": "^0.1.0",
       "mongoose": "^5.4.2",
       "mysql": "^2.16.0",
+      "node-rsa": "^1.0.2",
+      "nodemailer": "^5.1.1",
+      "phpass": "^0.1.1",
       "popper.js": "^1.14.6",
       "request": "^2.88.0",
       "spdy": "^4.0.0"
@@ -407,7 +415,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
     integrity sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY=
   
-  asn1@~0.2.3:
+  asn1@^0.2.4, asn1@~0.2.3:
     version "0.2.4"
     resolved "https://registry.yarnpkg.com/asn1/-/asn1-0.2.4.tgz#8d2475dfab553bb33e77b54e59e880bb8ce23136"
     integrity sha512-jxwzQpLQjSmWXgwaCZE9Nz+glAG01yF1QnWgbhGwHI5A6FRIEY6IVqtHhIepHqI7/kyEyQEagBC5mBEFlIYvdg==
@@ -1084,6 +1092,24 @@ Lockfile:
     dependencies:
       safe-buffer "~5.1.1"
   
+  cookie-parser@^1.4.3:
+    version "1.4.3"
+    resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.3.tgz#0fe31fa19d000b95f4aadf1f53fdc2b8a203baa5"
+    integrity sha1-D+MfoZ0AC5X0qt8fU/3CuKIDuqU=
+    dependencies:
+      cookie "0.3.1"
+      cookie-signature "1.0.6"
+  
+  cookie-session@^2.0.0-beta.3:
+    version "2.0.0-beta.3"
+    resolved "https://registry.yarnpkg.com/cookie-session/-/cookie-session-2.0.0-beta.3.tgz#4e446bd9f85bd7e27d3e226f4e99af12011a4386"
+    integrity sha512-zyqm5tA0z9yMEB/xyP7lnRnqp8eLR2e0dap+9+rBwVigla9yPKn8XTL1jJymog8xjfrowqW2o5LUjixQChkqrw==
+    dependencies:
+      cookies "0.7.1"
+      debug "3.1.0"
+      on-headers "~1.0.1"
+      safe-buffer "5.1.1"
+  
   cookie-signature@1.0.6:
     version "1.0.6"
     resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
@@ -1103,6 +1129,14 @@ Lockfile:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.2.tgz#dd8a235530752f988f9a0844f3fc589e3111125c"
     integrity sha512-Mw+adcfzPxcPeI+0WlvRrr/3lGVO0bD75SxX6811cxSh1Wbxx7xZBGK1eVtDf6si8rg2lhnUjsVLMFMfbRIuwA==
+  
+  cookies@0.7.1:
+    version "0.7.1"
+    resolved "https://registry.yarnpkg.com/cookies/-/cookies-0.7.1.tgz#7c8a615f5481c61ab9f16c833731bcb8f663b99b"
+    integrity sha1-fIphX1SBxhq58WyDNzG8uPZjuZs=
+    dependencies:
+      depd "~1.1.1"
+      keygrip "~1.0.2"
   
   copy-descriptor@^0.1.0:
     version "0.1.1"
@@ -1427,6 +1461,11 @@ Lockfile:
     integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
     dependencies:
       is-obj "^1.0.0"
+  
+  dotenv@^6.2.0:
+    version "6.2.0"
+    resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
+    integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
   
   duplexer2@0.0.2:
     version "0.0.2"
@@ -2094,6 +2133,11 @@ Lockfile:
     integrity sha512-BRdNm8hbWzFzWHERTrejLqwHDfS4GibPoq5wjTPIoJHoBtKGPg3xAFfxmM+9ztbXelxcf2hwQcaz1PtmFeue8g==
     dependencies:
       globule "^1.0.0"
+  
+  generate-password@^1.4.1:
+    version "1.4.1"
+    resolved "https://registry.yarnpkg.com/generate-password/-/generate-password-1.4.1.tgz#33ab0f004d3adbde6c63bfc8bb9798da2a848174"
+    integrity sha512-MwMSkOIKkgYBG3JrquF0m/Rky+pl5jZFNmoroE9bQU5VawFDKdJfxMx1qBthPusx8GQyNWSW0m+Jaw0mZnqApg==
   
   get-caller-file@^1.0.1:
     version "1.0.3"
@@ -3164,6 +3208,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.3.0.tgz#ef33c42e9024dce511eeaf440cd684f3af1fc769"
     integrity sha512-6hHxsp9e6zQU8nXsP+02HGWXwTkOEw6IROhF2ZA28cYbUk4eJ6QbtZvdqZOdD9YPKghG3apk5eOCvs+tLl3lRg==
   
+  keygrip@^1.0.3, keygrip@~1.0.2:
+    version "1.0.3"
+    resolved "https://registry.yarnpkg.com/keygrip/-/keygrip-1.0.3.tgz#399d709f0aed2bab0a059e0cdd3a5023a053e1dc"
+    integrity sha512-/PpesirAIfaklxUzp4Yb7xBper9MwP6hNRA6BGGUFCgbJ+BM5CKBtsoxinNXkLHAr+GXS1/lSlF2rP7cv5Fl+g==
+  
   kind-of@^1.1.0:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-1.1.0.tgz#140a3d2d41a36d2efcfa9377b62c24f8495a5c44"
@@ -3853,6 +3902,13 @@ Lockfile:
       semver "^5.3.0"
       tar "^4"
   
+  node-rsa@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/node-rsa/-/node-rsa-1.0.2.tgz#142b75907fee8f494876f9e6187d1f7c07c107ac"
+    integrity sha512-2Uf7rermLy0tfm74QGXUJwWd7/YiRKIgGIiezC2Ya7DL2S/ej6zkUCpMg7wAOoS0PXGk/vl77fkHitpiW4nErA==
+    dependencies:
+      asn1 "^0.2.4"
+  
   node-sass@^4.8.3:
     version "4.11.0"
     resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.11.0.tgz#183faec398e9cbe93ba43362e2768ca988a6369a"
@@ -3877,6 +3933,11 @@ Lockfile:
       sass-graph "^2.2.4"
       stdout-stream "^1.4.0"
       "true-case-path" "^1.0.2"
+  
+  nodemailer@^5.1.1:
+    version "5.1.1"
+    resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-5.1.1.tgz#0c48d1ecab02e86d9ff6c620ee75ed944b763505"
+    integrity sha512-hKGCoeNdFL2W7S76J/Oucbw0/qRlfG815tENdhzcqTpSjKgAN91mFOqU2lQUflRRxFM7iZvCyaFcAR9noc/CqQ==
   
   nodemon@^1.18.7, nodemon@^1.18.9:
     version "1.18.9"
@@ -4335,6 +4396,11 @@ Lockfile:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
     integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
+  
+  phpass@^0.1.1:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/phpass/-/phpass-0.1.1.tgz#5626676d11e2feb7a4b5daedb34e5f7598df80b5"
+    integrity sha1-ViZnbRHi/rektdrts05fdZjfgLU=
   
   pify@^2.0.0:
     version "2.3.0"
@@ -4856,6 +4922,11 @@ Lockfile:
     integrity sha512-JTWmoY9tWCs7zvIk/CvRjhjGaOd+OVBM987mxFo+OW66cGpdKjZcpmc74ES1sB//7Kl/PAe8+wEakuhG4pcgOw==
     dependencies:
       tslib "^1.9.0"
+  
+  safe-buffer@5.1.1:
+    version "5.1.1"
+    resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
+    integrity sha512-kKvNJn6Mm93gAczWVJg7wH+wGYWNrDHdWvpUmHyEsgCtIwwo3bqPtV4tR5tuPaUhTOo/kvhVwd8XwwOllGYkbg==
   
   safe-buffer@5.1.2, safe-buffer@^5.0.1, safe-buffer@^5.1.0, safe-buffer@^5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
     version "5.1.2"

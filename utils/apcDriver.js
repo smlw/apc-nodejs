@@ -5,8 +5,8 @@ const mysql = require('mysql');
 const passGen = require('./passGen')
 const key = new NodeRSA(config.PRIVATE_KEY);
 const nodemailer = require('nodemailer');
-const PasswordHash = require('phpass').PasswordHash;
-const passwordHash = new PasswordHash();
+const passwordHash = require('password-hash');
+const bcrypt = require('bcrypt-nodejs')
 
 module.exports = async () => {
     try {
@@ -59,54 +59,54 @@ module.exports = async () => {
                                         u.exclude,
                                         convertBool(u.strict))
 
-                                    const hashNewPassword = passwordHash.hashPassword(newPassword);
+                                    const hashNewPassword = bcrypt.hashSync(newPassword)
                                     console.log(hashNewPassword)
                                     // 2. Отсылаем его на почту
                                     // NODE-MAILER
-                                    const transporter = nodemailer.createTransport({
-                                        host: "smtp.gmail.com",
-                                        port: 587,
-                                        secure: false, // upgrade later with STARTTLS
-                                        tls: {
-                                            rejectUnauthorized: false
-                                        },
-                                        auth: {
-                                            user: config.EMAIL.LOGIN,
-                                            pass: config.EMAIL.PASSWORD
-                                        }
-                                    });
+                                    // const transporter = nodemailer.createTransport({
+                                    //     host: "smtp.gmail.com",
+                                    //     port: 587,
+                                    //     secure: false, // upgrade later with STARTTLS
+                                    //     tls: {
+                                    //         rejectUnauthorized: false
+                                    //     },
+                                    //     auth: {
+                                    //         user: config.EMAIL.LOGIN,
+                                    //         pass: config.EMAIL.PASSWORD
+                                    //     }
+                                    // });
 
                                     // setup e-mail data with unicode symbols
-                                    var mailOptions = {
-                                        from: `${app.domain}`, // sender address
-                                        to: `${u.email}`, // list of receivers
-                                        subject: 'Hello ✔', // Subject line
-                                        text: 'Hello world ?', // plaintext body
-                                        html: `Дата: Тут дата <br><b>Пароль: ${newPassword}</b>` // html body
-                                    };
+                                    // var mailOptions = {
+                                    //     from: `${app.domain}`, // sender address
+                                    //     to: `${u.email}`, // list of receivers
+                                    //     subject: 'Hello ✔', // Subject line
+                                    //     text: 'Hello world ?', // plaintext body
+                                    //     html: `Дата: Тут дата <br><b>Пароль: ${newPassword}</b>` // html body
+                                    // };
 
-                                    // send mail with defined transport object
-                                    transporter.sendMail(mailOptions, function (error, info) {
-                                        if (error) {
-                                            return console.log(error);
-                                        } else {
-                                            // 3. Если отправлено было удачно, то меняем в базе данных
-                                            connection.query(`UPDATE ${app.dbTable} SET ${app.colUserPassword} = '${hashNewPassword}' WHERE ${app.colUserId} = ${u.id}`, function (err, result) {
-                                            // connection.query(`SELECT * FROM wercs_users`, function (err, result) {
-                                                if (err) throw err;
-                                                console.log(result);
-                                            });
-                                            console.log('Message sent: ' + info.response);
-                                        }
-                                    });
+                                    // // send mail with defined transport object
+                                    // transporter.sendMail(mailOptions, function (error, info) {
+                                    //     if (error) {
+                                    //         return console.log(error);
+                                    //     } else {
+                                    //         // 3. Если отправлено было удачно, то меняем в базе данных
+                                    //         connection.query(`UPDATE ${app.dbTable} SET ${app.colUserPassword} = '${hashNewPassword}' WHERE ${app.colUserId} = ${u.id}`, function (err, result) {
+                                    //         // connection.query(`SELECT * FROM wercs_users`, function (err, result) {
+                                    //             if (err) throw err;
+                                    //             console.log(result);
+                                    //         });
+                                    //         console.log('Message sent: ' + info.response);
+                                    //     }
+                                    // });
 
-                                    transporter.verify(function (error, success) {
-                                        if (error) {
-                                            console.log(error);
-                                        } else {
-                                            console.log("Server is ready to take our messages");
-                                        }
-                                    });
+                                    // transporter.verify(function (error, success) {
+                                    //     if (error) {
+                                    //         console.log(error);
+                                    //     } else {
+                                    //         console.log("Server is ready to take our messages");
+                                    //     }
+                                    // });
 
 
                                     console.log(newPassword)

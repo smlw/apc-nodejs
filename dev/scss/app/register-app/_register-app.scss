@@ -1,12 +1,19 @@
 .register-app {
-    background: #fff;
-    h1 {
-        margin: 25px;
-    }
+  background: #fff;
+  h1 {
+    margin: 25px;
+  }
 
-    .btn-contolls {
-        button {
-            margin: 0 20px 0 0;
-        }
+  .btn-contolls {
+    button {
+      margin: 0 20px 0 0;
     }
+  }
+  .db-fields_line{
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+  }
 }
