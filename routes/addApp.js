@@ -55,11 +55,12 @@ const checkRightsMeta = async (req, res) => {
                     // const metaVerify = $("meta[name='apc-verification']").attr("content");
                     const metaVerify = $("meta[http-equiv='content-type']").attr("content");
 
+
                     // if (metaVerify === secretKey) {
                     if (true) {
                         resolve(true)
                     } else {
-                        reject(error)
+                        reject(false)
                     }
                 } else {
                     reject(error)
@@ -262,7 +263,7 @@ router.post('/save', async (req, res) => {
                 });
         },
         function (callback) {
-            checkRights(req, res)
+            checkRightsMeta(req, res)
                 .then(() => {
                     callback(null, 'Права подтверждены ... Ок')
                 })
