@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
     owner    : { type: Schema.Types.ObjectId, required: true },
-    appId    : { type: Schema.Types.ObjectId, required: true },
+    appId    : { type: Schema.Types.ObjectId, ref: 'App'},
     category : { type: String, required: true},
     type     : { type: String, required: true},
     recText  : { type: Object, required: true},
