@@ -44,7 +44,7 @@
 {{#each apps}}
 <div class="account-content-item border-bottom">
   <div class="account-content-item__line d-flex justify-content-start">
-    <div class="account-content-item__line_lattice d-none d-md-block">{{@index}}</div>
+    <div class="account-content-item__line_lattice d-none d-md-block">{{@index }}</div>
     <div class="account-content-item__line_label"><a href="{{domain}}">{{domain}}</a></div>
     <div class="account-content-item__line_actions d-flex justify-content-between">
       {{#if isActive}}
@@ -97,12 +97,4 @@
     </div>
   </div>
 </div>
-{{/each}}
-{{#each logs}}
-  <div class="account-content_log">
-    <div> {{createAt}} </div>
-    <div>
-      <span>{{recText.res}} — {{recText.user}}</span>
-    </div>
-  </div>
 {{/each}}

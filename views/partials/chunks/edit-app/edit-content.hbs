@@ -1,19 +1,24 @@
 <div class="tab-content">
-    <div class="tab-pane active" id="edit-main" role="tabpanel">
-       {{> chunks/edit-app/partials/tab-main}}
+  <div class="tab-pane active" id="edit-main" role="tabpanel">
+    {{> chunks/edit-app/partials/tab-main}}
+  </div>
+  <div class="tab-pane" id="edit-db" role="tabpanel">
+    {{> chunks/edit-app/partials/tab-db}}
+  </div>
+  <div class="tab-pane" id="edit-users" role="tabpanel">
+    {{> chunks/edit-app/partials/tab-users}}
+  </div>
+  <div class="tab-pane" id="edit-logs" role="tabpanel">
+    <h2>Журнал событий</h2>
+    {{#each logs}}
+    <div class="account-content_log">
+      <div> {{createAt}} </div>
+      <div>
+        <span>{{recText.res}} — {{recText.user}}</span>
+      </div>
     </div>
-    <div class="tab-pane" id="edit-db" role="tabpanel">
-        {{> chunks/edit-app/partials/tab-db}}
-    </div>
-    <div class="tab-pane" id="edit-view" role="tabpanel">
-        {{> chunks/edit-app/partials/tab-view}}
-    </div>
-    <div class="tab-pane" id="edit-stats" role="tabpanel">
-        DISABLE2
-    </div>
-    <div class="tab-pane" id="edit-logs" role="tabpanel">
-        DISABLE3
-    </div>
+    {{/each}}
+  </div>
 
-    {{> chunks/edit-app/partials/modal}}
+  {{> chunks/edit-app/partials/modal}}
 </div>

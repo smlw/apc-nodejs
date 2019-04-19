@@ -10,13 +10,6 @@ router.get('/', async (req, res) => {
   const apps = await models.App.find({
     owner: req.user.id
   });
-  const logs = await models.Log.find({
-    owner: req.user.id
-  })
-    .sort({
-        createdAt: -1
-    })
-    .populate('App')
 
   // Decrypt domain field 
   apps.forEach((item) => {
@@ -25,7 +18,6 @@ router.get('/', async (req, res) => {
 
   res.render('account', {
     apps,
-    logs,
     user: req.user
   })
 });
