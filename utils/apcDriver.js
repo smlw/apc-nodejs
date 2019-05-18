@@ -5,7 +5,6 @@ const mysql = require('mysql');
 const passGen = require('./passGen')
 const key = new NodeRSA(config.PRIVATE_KEY);
 const nodemailer = require('nodemailer');
-const passwordHash = require('password-hash');
 const bcrypt = require('bcrypt-nodejs')
 
 module.exports = async () => {
@@ -41,7 +40,7 @@ module.exports = async () => {
             reject(err.code)
             connection.end();
           } else {
-            connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId  = ${app.dbTable}.${app.colUserId}`, function (err, result) {
+            connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId = ${app.dbTable}.${app.colUserId}`, function (err, result) {
               if (!err) {
                 result.forEach(u => {
                   // func to converting 1/0 to true/false
@@ -93,6 +92,7 @@ module.exports = async () => {
                     html: `
                       Дата: ${now} <br>
                       Ресурс: ${app.domain}<br>
+                      Пользователь: ${u.username}<br>
                       <b>Пароль: ${newPassword}</b>
                     ` // html body
                   };
@@ -146,7 +146,7 @@ module.exports = async () => {
                 reject(err.code)
               }
             });
-            // connection.end();
+            connection.end();
           };
         });
       })

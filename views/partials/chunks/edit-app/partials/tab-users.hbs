@@ -1,5 +1,4 @@
 <h2>Пользователи ресурса</h2>
-
 <div class="account-content-item border-bottom">
   <div class="account-content-item__line d-flex justify-content-between">
     <div class="account-content-item__line_label">User id</div>
@@ -13,7 +12,7 @@
     <div class="account-content-item__line_label">{{id}}</div>
     <div class="account-content-item__line_label">{{username}}</div>
     <div class="account-content-item__line_actions d-flex justify-content-between">
-      <button class="btn btn-sm btn-primary">Изменить пароль</a>
+      <button class="btn btn-sm btn-primary" onClick="changeUserPassword({{id}}, {{app.id}})">Изменить пароль</a>
     </div>
   </div>
 </div>
