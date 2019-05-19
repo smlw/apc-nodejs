@@ -113,7 +113,11 @@ router.post('/', async (req, res) => {
             } else {
               connection.query(`UPDATE ${app.dbTable} SET ${mainApp.colUserPassword} = '${hashNewPassword}' WHERE ${mainApp.colUserId} = ${userId}`, function (err, result) {
                 if (err) {
-                  console.log(err)
+                  res.json({
+                    ok: false,
+                    msg: 'Пароль успешно изменен!'
+                  })
+
                   // Write succes to log
                   models.Log.create({
                     owner: app.owner,
@@ -125,18 +129,24 @@ router.post('/', async (req, res) => {
                     category: 'password',
                     type: 'error'
                   })
+                } else {
+                  res.json({
+                    ok: true,
+                    msg: 'Пароль успешно изменен!'
+                  })
+
+                  // Write succes to log
+                  models.Log.create({
+                    owner: app.owner,
+                    appId: appId,
+                    recText: {
+                      res: result.message,
+                      user: userId
+                    },
+                    category: 'password',
+                    type: 'success'
+                  })
                 }
-                // Write succes to log
-                models.Log.create({
-                  owner: app.owner,
-                  appId: appId,
-                  recText: {
-                    res: result.message,
-                    user: userId
-                  },
-                  category: 'password',
-                  type: 'success'
-                })
               })
             }
           })

@@ -71,9 +71,14 @@ router.get('/:id', async (req, res, next) => {
       .then((users) => {
         // Render view with app-object
         res.render('editApp', {
-          users,
+          "gallery": [{
+            "images": ["firstImg.jpg", "secondImg.jpg", "threeImg"],
+            "description": ["someFirstTxt", "SecondTxt", "ThreeTxt"]
+          }],
           logs,
-          app: {
+          app: [{
+            users,
+            appId: app._id,
             domain: key.decrypt(app.domain, 'utf8'),
             dbHost: key.decrypt(app.dbHost, 'utf8'),
             dbName: key.decrypt(app.dbName, 'utf8'),
@@ -81,7 +86,7 @@ router.get('/:id', async (req, res, next) => {
             dbPassword: 'Скрыто',
             dbTable: key.decrypt(app.dbTable, 'utf8'),
             dbType: app.dbType
-          },
+          }],
           user: req.user
         })
       })

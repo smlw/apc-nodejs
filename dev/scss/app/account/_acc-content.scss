@@ -21,6 +21,9 @@
   }
 
   &-item {
+    @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+    @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+    @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
     &__line {
       padding: 15px 0;
 
@@ -41,6 +44,20 @@
 
       &_actions {
         width: 100%;
+        button{
+          border: 1px solid #ccc;
+          margin: 0 auto;
+          .animate-rotate{
+            -webkit-animation: spin 2s linear infinite;
+            -moz-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+          }
+          svg {
+            margin: -7px 0 0 -1px;
+            width: 17px;
+            height: 14px;
+          }
+        }
       }
     }
   }

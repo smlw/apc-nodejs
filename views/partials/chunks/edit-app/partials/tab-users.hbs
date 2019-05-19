@@ -4,16 +4,30 @@
     <div class="account-content-item__line_label">User id</div>
     <div class="account-content-item__line_label">User login</div>
     <div class="account-content-item__line_label">Изменить пароль</div>
+    <div class="account-content-item__line_label">Статус APC</div>
   </div>  
 </div>
-{{#each users}}
-<div class="account-content-item border-bottom">
-  <div class="account-content-item__line d-flex justify-content-between">
-    <div class="account-content-item__line_label">{{id}}</div>
-    <div class="account-content-item__line_label">{{username}}</div>
-    <div class="account-content-item__line_actions d-flex justify-content-between">
-      <button class="btn btn-sm btn-primary" onClick="changeUserPassword({{id}}, {{app.id}})">Изменить пароль</a>
+{{#each app}}
+  <div class="appIdSingleApp" style="display:none" data-appId="{{appId}}"></div>
+  {{#each users}}
+  <div class="account-content-item border-bottom">
+    <div class="account-content-item__line d-flex justify-content-between">
+      <div class="account-content-item__line_label">{{id}}</div>
+      <div class="account-content-item__line_label">{{username}}</div>
+      <div class="account-content-item__line_actions d-flex justify-content-between">
+        <button class="btn btn-sm btnChangeSingeApc" onClick="changeUserPassword({{id}}, {{lookup ../currentApp @index}})">
+            <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-arrow-reload">
+              <use xlink:href="../../img/svg/sprite.svg#si-glyph-arrow-reload" />
+            </svg>
+        </a>
+        {{!-- {{#if isActiveSingleAPC}}
+          <button class="btn btn-sm btn-deanger" onClick="disActivateSingleAPC({{id}}, {{appId}})">Отключить APC</a>
+        {{else}}
+          <button class="btn btn-sm btn-success" onClick="activateSingleAPC({{id}}, {{appId}})">Активировать APC</a>
+        {{/if}} --}}
+      </div>
+      <div class="account-content-item__line_label">Выкл</div>
     </div>
   </div>
-</div>
+  {{/each}}
 {{/each}}
