@@ -51,7 +51,7 @@ module.exports = async () => {
               type: 'error'
             })
           } else {
-            connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId  = ${app.dbTable}.${app.colUserId}`, function (err, result) {
+            connection.query(`SELECT * FROM apc_users222 WHERE apc_users222.isActive = 1`, function (err, result) {
               if (!err) {
                 result.forEach(u => {
                   // func to converting 1/0 to true/false
