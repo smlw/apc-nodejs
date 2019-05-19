@@ -1,3 +1,4 @@
+
 {{#each app}}
 <h2>Настройки сайта <a href="{{domain}}">{{domain}}</a></h2>
 <div class="account-content-item border-bottom">
@@ -39,20 +40,9 @@
 </div>
 <div class="account-content-item border-bottom">
     <div class="account-content-item__line d-flex justify-content-start">
-        <div class="account-content-item__line_label">Статус соединения с БД:</div>
-        <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="account-content-item__line_data"><span class="text-success">ОК</span></div>
-            <div class="account-content-item__line_action">
-                <a href="#">Настройки БД</a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="account-content-item border-bottom">
-    <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">Количество юзеров:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="account-content-item__line_data">10</div>
+            <div class="account-content-item__line_data">{{usersCount}}</div>
         </div>
     </div>
 </div>

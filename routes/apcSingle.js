@@ -82,8 +82,6 @@ router.post('/', async (req, res) => {
   const appId = req.body.app.trim();
   const userId = req.body.user;
 
-  console.log(userId)
-
   const mainApp = await models.App.findOne({
     _id: appId
   })
@@ -112,7 +110,6 @@ router.post('/', async (req, res) => {
         console.log(err.code)
         connection.end();
       } else {
-        console.log(userId)
         connection.query(`SELECT * FROM apc_users222 WHERE apc_users222.userId = ${userId}`, function (err, result) {
           convertBool = (param) => param === 1 ? true : false;
           // 1. Генерируем пароль
@@ -173,7 +170,6 @@ router.post('/', async (req, res) => {
               })
               return false
             } else {
-              console.log(userId)
               connection.query(`UPDATE ${app.dbTable} SET ${mainApp.colUserPassword} = '${hashNewPassword}' WHERE ${mainApp.colUserId} = ${userId}`, function (err, result) {
                 if (err) {
                   console.log(err)
@@ -218,74 +214,6 @@ router.post('/', async (req, res) => {
       };
     });
   })
-
-  // lego()
-  //   .then(() => {
-  //     console.log('then')
-  //   })
-  //   .catch(() => {
-  //     console.log('catch')
-  //   })
-
-  // const newPassword = passGen(8, 1, 1, 1, 1, 1, 1)
-  // const hashNewPassword = bcrypt.hashSync(newPassword)
-
-  // const transporter = nodemailer.createTransport({
-  //   host: "smtp.gmail.com",
-  //   port: 587,
-  //   secure: false, // upgrade later with STARTTLS
-  //   tls: {
-  //     rejectUnauthorized: false
-  //   },
-  //   auth: {
-  //     user: config.EMAIL.LOGIN,
-  //     pass: config.EMAIL.PASSWORD
-  //   }
-  // });
-
-  // //setup e-mail data with unicode symbols
-  // const today = new Date();
-  // const dd = String(today.getDate());
-  // const mm = String(today.getMonth()); //January is 0!
-  // const m = String(today.getMinutes()); //January is 0!
-  // const h = String(today.getHours()); //January is 0!
-  // const s = String(today.getSeconds()); //January is 0!
-  // const yyyy = today.getFullYear();
-  // let now = `${mm}/${dd}/${yyyy} ${h}:${m}:${s}`
-
-  // var mailOptions = {
-  //   from: 'APC.ru <password@apc.ru>', // sender address
-  //   to: `${u.email}`, // list of receivers
-  //   subject: 'Новый пароль!', // Subject line
-  //   text: 'Hello world ?', // plaintext body
-  //   html: `
-  //     Дата: ${now} <br>
-  //     <b>Пароль: ${newPassword}</b>
-  //   ` // html body
-  // };
-
-  // // send mail with defined transport object
-  // transporter.sendMail(mailOptions, async (error, info) => {
-  //   if (error) {
-  //     // Write erro to log
-  //     return false
-  //   } else {
-  //     // 3. Если отправлено было удачно, то меняем в базе данных
-  //     connection.query(`UPDATE ${app.dbTable} SET ${app.colUserPassword} = '${hashNewPassword}' WHERE ${app.colUserId} = ${u.id}`, function (err, result) {
-  //       // connection.query(`SELECT * FROM wercs_users`, function (err, result) {
-  //       if (err) throw err;
-  //     });
-  //   }
-  // });
-
-  // transporter.verify(function (error, success) {
-  //   if (error) {
-  //     console.log(error);
-  //   } else {
-  //     console.log("Server is ready to take our messages");
-  //   }
-  // });
-  // console.log(newPassword)
 })
 
 module.exports = router;

@@ -74,7 +74,9 @@ router.get('/:id', async (req, res, next) => {
           logs,
           app: [{
             users,
+            usersCount: users.length,
             appId: app._id,
+            isActive: app.isActive,
             domain: key.decrypt(app.domain, 'utf8'),
             dbHost: key.decrypt(app.dbHost, 'utf8'),
             dbName: key.decrypt(app.dbName, 'utf8'),
