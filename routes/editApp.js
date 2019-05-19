@@ -70,7 +70,6 @@ router.get('/:id', async (req, res, next) => {
     appUser()
       .then((users) => {
         // Render view with app-object
-        console.log(users)
         res.render('editApp', {
           logs,
           app: [{

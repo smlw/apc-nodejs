@@ -54,7 +54,6 @@ router.post('/loadUsers', async (req, res) => {
               msg: 'Ошибка. Не удалось обновить список пользователей.'
             })
           } else {
-            console.log('im here3')
             res.json({
               ok: true,
               msg: 'Список пользователей успешно обновлен!'
@@ -71,6 +70,7 @@ router.post('/loadUsers', async (req, res) => {
               type: 'success'
             })
           }
+          connection.end();
         })
       }
     })
@@ -81,6 +81,8 @@ router.post('/', async (req, res) => {
   // const changerId = req.body.changerId.trim();
   const appId = req.body.app.trim();
   const userId = req.body.user;
+
+  console.log(userId)
 
   const mainApp = await models.App.findOne({
     _id: appId
@@ -110,18 +112,12 @@ router.post('/', async (req, res) => {
         console.log(err.code)
         connection.end();
       } else {
-        connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId = ${userId}`, function (err, result) {
+        console.log(userId)
+        connection.query(`SELECT * FROM apc_users222 WHERE apc_users222.userId = ${userId}`, function (err, result) {
           convertBool = (param) => param === 1 ? true : false;
           // 1. Генерируем пароль
           // Generate new password with user settings
-          const newPassword = passGen(
-            10,
-            1,
-            1,
-            1,
-            1,
-            0,
-            1)
+          const newPassword = passGen(10,1,1,1,1,0,1)
 
           const hashNewPassword = bcrypt.hashSync(newPassword)
           console.log(newPassword, hashNewPassword)
@@ -139,7 +135,6 @@ router.post('/', async (req, res) => {
               pass: config.EMAIL.PASSWORD
             }
           });
-
           //setup e-mail data with unicode symbols
           const today = new Date();
           const dd = String(today.getDate());
@@ -149,7 +144,6 @@ router.post('/', async (req, res) => {
           const s = String(today.getSeconds()); //January is 0!
           const yyyy = today.getFullYear();
           let now = `${mm}/${dd}/${yyyy} ${h}:${m}:${s}`
-
           var mailOptions = {
             from: 'APC.ru <password@apc.ru>', // sender address
             to: `${result[0].email}`, // list of receivers
@@ -179,13 +173,15 @@ router.post('/', async (req, res) => {
               })
               return false
             } else {
+              console.log(userId)
               connection.query(`UPDATE ${app.dbTable} SET ${mainApp.colUserPassword} = '${hashNewPassword}' WHERE ${mainApp.colUserId} = ${userId}`, function (err, result) {
                 if (err) {
+                  console.log(err)
                   res.json({
                     ok: false,
-                    msg: 'Пароль успешно изменен!'
+                    msg: 'Ошибка при обновлении пароля!'
                   })
-
+                  
                   // Write succes to log
                   models.Log.create({
                     owner: app.owner,
@@ -200,7 +196,7 @@ router.post('/', async (req, res) => {
                 } else {
                   res.json({
                     ok: true,
-                    msg: 'Пароль успешно изменен!'
+                    msg: 'Пароль пользователя успешно изменен!'
                   })
 
                   // Write succes to log
