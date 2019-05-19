@@ -1,9 +1,10 @@
-<h2>Настройки сайта <a href="{{app.domain}}">{{app.domain}}</a></h2>
+{{#each app}}
+<h2>Настройки сайта <a href="{{domain}}">{{domain}}</a></h2>
 <div class="account-content-item border-bottom">
     <div class="account-content-item__line d-flex justify-content-start">
         <div class="account-content-item__line_label">Домен:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between">
-            <div class="account-content-item__line_data"><a href="{{app.domain}}">{{app.domain}}</a></div>
+            <div class="account-content-item__line_data"><a href="{{domain}}">{{domain}}</a></div>
         </div>
     </div>
 </div>
@@ -12,7 +13,7 @@
         <div class="account-content-item__line_label">Статус APC:</div>
         <div class="account-content-item__line_actions d-flex justify-content-between setting_info_block">
             <div class="account-content-item__line_data ">
-            {{#if app.isActive}}
+            {{#if isActive}}
                 <span class="text-success">Активно</span>
             {{else}}
                 <span class="text-warning">Не активно</span>
@@ -63,3 +64,4 @@
         </div>
     </div>
 </div>
+{{/each}}

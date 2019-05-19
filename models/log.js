@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    owner    : { type: Schema.Types.ObjectId, required: true },
+    owner    : { type: Schema.Types.ObjectId },
     appId    : { type: Schema.Types.ObjectId, ref: 'App'},
     category : { type: String, required: true},
     type     : { type: String, required: true},
