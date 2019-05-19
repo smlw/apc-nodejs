@@ -40,6 +40,16 @@ module.exports = async () => {
           if (err) {
             reject(err.code)
             connection.end();
+            models.Log.create({
+              owner: app.owner,
+              appId: appId,
+              recText: {
+                res: 'Ошибка соединения с БД. Код ошибки ',
+                user: err.code
+              },
+              category: 'database',
+              type: 'error'
+            })
           } else {
             connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId  = ${app.dbTable}.${app.colUserId}`, function (err, result) {
               if (!err) {
@@ -105,7 +115,7 @@ module.exports = async () => {
                         owner: app.owner,
                         appId: app._id,
                         recText: {
-                          res: error.code,
+                          res: 'Ошибка отправки сообщеня на почту. Код ошибки ' + error.code + ' Email: ',
                           user: u.email
                         },
                         category: 'password',
@@ -122,7 +132,7 @@ module.exports = async () => {
                           owner: app.owner,
                           appId: app._id,
                           recText: {
-                            res: info.response,
+                            res: 'Успешная массовая смена пароля пользователя с email ',
                             user: u.email
                           },
                           category: 'password',

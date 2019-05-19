@@ -2,6 +2,7 @@
   <h2>Пользователи ресурса</h2>
   <button class="btn btn-sm btn-warning" onClick="updateAPCUsers()">Обновить список пользователей</button>
 </div>
+<div class="alert-content"></div>
 <div class="account-content-item border-bottom">
   <div class="account-content-item__line d-flex justify-content-between">
     <div class="account-content-item__line_label">User id</div>
@@ -18,7 +19,7 @@
       <div class="account-content-item__line_label">{{userId}}</div>
       <div class="account-content-item__line_label">{{username}}</div>
       <div class="account-content-item__line_actions d-flex justify-content-between">
-        <button class="btn btn-sm btnChangeSingeApc" onClick="changeUserPassword({{id}})">
+        <button class="btn btn-sm btnChangeSingeApc" onClick="changeUserPassword({{userId}})">
             <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-arrow-reload">
               <use xlink:href="../../img/svg/sprite.svg#si-glyph-arrow-reload" />
             </svg>
@@ -26,9 +27,9 @@
       </div>
       <div class="account-content-item__line_label">       
         {{#if isActive}}
-          <button class="btn btn-sm btn-danger" onClick="disActivateSingleAPC({{id}}">Выкл</a>
-        {{else}}
           <button class="btn btn-sm btn-success" onClick="activateSingleAPC({{id}})">Вкл</a>
+        {{else}}
+          <button class="btn btn-sm btn-danger" onClick="disActivateSingleAPC({{id}}">Выкл</a>
         {{/if}}
       </div>
     </div>

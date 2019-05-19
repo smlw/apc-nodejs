@@ -33,9 +33,10 @@ function updateAPCUsers() {
         }
     }).done(function (data) {
         if (!data.ok) {
-            console.log('set !ok' + data.error);
+            $('.alert-content').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+data.error+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
         } else {
-            console.log('set ok' + data)
+            $('.alert-content').append('<div class="alert alert-success alert-dismissible fade show" role="alert">'+data.msg+' Через 5 секунд страница будет перезагружена<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
+            setTimeout(function(){ location.reload(); }, 5000);
         }
     });
 };
@@ -61,8 +62,10 @@ function changeUserPassword(userId) {
     }).done(function (data) {
         if (!data.ok) {
             console.log(data.error);
+            $('.alert-content').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+data.error+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
         } else {
-            console.log(data)
+            console.log(data.user)
+            $('.alert-content').append('<div class="alert alert-success alert-dismissible fade show" role="alert">'+data.msg+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
         }
     });
 };
