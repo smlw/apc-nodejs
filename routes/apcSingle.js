@@ -27,8 +27,6 @@ router.post('/', async (req, res) => {
     dbTable: key.decrypt(mainApp.dbTable, 'utf8')
   }
 
-  console.log(app)
-
   return new Promise(async (resolve, reject) => {
     let connection = mysql.createConnection({
       host: app.dbHost,
@@ -45,18 +43,17 @@ router.post('/', async (req, res) => {
         connection.end();
       } else {
         connection.query(`SELECT * FROM apc_users222, ${app.dbTable} WHERE apc_users222.userId = ${userId}`, function (err, result) {
-          console.log(result[0])
           convertBool = (param) => param === 1 ? true : false;
           // 1. Генерируем пароль
           // Generate new password with user settings
           const newPassword = passGen(
-            result[0].length,
-            convertBool(result[0].numbers),
-            convertBool(result[0].symbols),
-            convertBool(result[0].uppersace),
-            convertBool(result[0].excludeSimilarCharacters),
-            result[0].exclude,
-            convertBool(result[0].strict))
+            10,
+            1,
+            1,
+            1,
+            1,
+            0,
+            1)
 
           const hashNewPassword = bcrypt.hashSync(newPassword)
           console.log(newPassword, hashNewPassword)

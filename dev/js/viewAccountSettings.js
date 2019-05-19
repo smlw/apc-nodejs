@@ -12,7 +12,7 @@ $(function () {
 });
 
 function changeUserPassword(userId) {
-    var appId = '5cb5b590db9c2a1c08d5ab5a'
+    var appId = '5ce0054f0590f83b301d5bd7'
     var data = {
         user: userId,
         app: appId
@@ -31,7 +31,5 @@ function changeUserPassword(userId) {
             console.log(data)
         }
     });
-
-    alert('clickedd ' + userId)
 }
   
