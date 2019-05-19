@@ -1,3 +1,10 @@
+.user-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: flex-start
+}
+
 .account-content {
   &_overlay {
     position: relative;

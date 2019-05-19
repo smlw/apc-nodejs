@@ -9,6 +9,74 @@ const key = new NodeRSA(config.PRIVATE_KEY);
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt-nodejs')
 
+router.post('/loadUsers', async (req, res) => {
+
+  const appId = req.body.appId.trim();
+
+  const mainApp = await models.App.findOne({
+    _id: appId
+  })
+
+  const app = {
+    domain: key.decrypt(mainApp.domain, 'utf8'),
+    dbHost: key.decrypt(mainApp.dbHost, 'utf8'),
+    dbName: key.decrypt(mainApp.dbName, 'utf8'),
+    dbUser: key.decrypt(mainApp.dbUser, 'utf8'),
+    dbPassword: key.decrypt(mainApp.dbPassword, 'utf8'),
+    dbTable: key.decrypt(mainApp.dbTable, 'utf8')
+  }
+
+  return new Promise(async (resolve, reject) => {
+    let connection = mysql.createConnection({
+      host: app.dbHost,
+      user: app.dbUser,
+      password: app.dbPassword,
+      tableName: app.dbTable,
+      database: app.dbName,
+      port: app.dbPort
+    });
+    await connection.connect(function (err) {
+      if (err) {
+        reject(err.code)
+        console.log(err.code)
+        res.json({
+          ok: false,
+          msg: 'Код ошибки' + err.code
+        })
+        connection.end();
+      } else {
+        connection.query(`INSERT INTO apc_users222 (userId, username, email) SELECT DISTINCT id, username, email FROM wercs_users WHERE id NOT IN (SELECT DISTINCT userId FROM apc_users222)`, function (err, result) {
+          if (err) {
+            console.log(err)
+            reject(false)
+            res.json({
+              ok: false,
+              msg: 'Ошибка. Не удалось обновить список пользователей.'
+            })
+          } else {
+            console.log('im here3')
+            res.json({
+              ok: true,
+              msg: 'Список пользователей успешно обновлен!'
+            })
+
+            // Write succes to log
+            models.Log.create({
+              owner: app.owner,
+              appId: appId,
+              recText: {
+                res: result.message
+              },
+              category: 'password',
+              type: 'success'
+            })
+          }
+        })
+      }
+    })
+  })
+})
+
 router.post('/', async (req, res) => {
   // const changerId = req.body.changerId.trim();
   const appId = req.body.app.trim();

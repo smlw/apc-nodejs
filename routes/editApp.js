@@ -46,7 +46,7 @@ router.get('/:id', async (req, res, next) => {
             console.log(err.code)
             connection.end();
           } else {
-            const SQLUsers = `SELECT * FROM ${tableName}`;
+            const SQLUsers = `SELECT * FROM apc_users222`;
             connection.query(SQLUsers, function (err, result) {
               if (err) {
                 reject(err.code)
@@ -70,11 +70,8 @@ router.get('/:id', async (req, res, next) => {
     appUser()
       .then((users) => {
         // Render view with app-object
+        console.log(users)
         res.render('editApp', {
-          "gallery": [{
-            "images": ["firstImg.jpg", "secondImg.jpg", "threeImg"],
-            "description": ["someFirstTxt", "SecondTxt", "ThreeTxt"]
-          }],
           logs,
           app: [{
             users,

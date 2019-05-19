@@ -343,10 +343,15 @@ router.post('/save', async (req, res) => {
                 reject(err.code)
                 connection.end();
             } else {
-              const SQLcreateApcTable = "CREATE TABLE apc_users222( id INT NOT NULL AUTO_INCREMENT, userId INT(11) NOT NULL, isActive INT(1) DEFAULT 0, length INT(11) DEFAULT 8, numbers INT(1) DEFAULT 1, symbols INT(1) DEFAULT 1, uppercase INT(1) DEFAULT 1, excludeSimilarCharacters INT(1) DEFAULT 1, exclude INT(1) DEFAULT 0, strict INT(1) DEFAULT 1, primary key (id) );"
+              const SQLcreateApcTable = "CREATE TABLE apc_users222( id INT NOT NULL AUTO_INCREMENT, userId INT(11) NOT NULL, username VARCHAR(32) NULL, email VARCHAR(32) NULL, isActive INT(1) DEFAULT 0, length INT(11) DEFAULT 8, numbers INT(1) DEFAULT 1, symbols INT(1) DEFAULT 1, uppercase INT(1) DEFAULT 1, excludeSimilarCharacters INT(1) DEFAULT 1, exclude INT(1) DEFAULT 0, strict INT(1) DEFAULT 1, primary key (id) );"
               connection.query(SQLcreateApcTable, function (err, result) {
                 if (err) {
+                  console.log(err)
                   reject(false)
+                  res.json({
+                    ok: false,
+                    msg: err
+                  })
                 } else {
                   if (newApp) {
                     res.json({
