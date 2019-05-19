@@ -87,6 +87,7 @@ router.post('/', async (req, res) => {
   })
 
   const app = {
+    owner: mainApp.owner,
     domain: key.decrypt(mainApp.domain, 'utf8'),
     dbHost: key.decrypt(mainApp.dbHost, 'utf8'),
     dbName: key.decrypt(mainApp.dbName, 'utf8'),
@@ -94,6 +95,9 @@ router.post('/', async (req, res) => {
     dbPassword: key.decrypt(mainApp.dbPassword, 'utf8'),
     dbTable: key.decrypt(mainApp.dbTable, 'utf8')
   }
+
+  // console.log(mainApp)
+  // console.log(app)
 
   return new Promise(async (resolve, reject) => {
     let connection = mysql.createConnection({
@@ -107,8 +111,17 @@ router.post('/', async (req, res) => {
     await connection.connect(function (err) {
       if (err) {
         reject(err.code)
-        console.log(err.code)
         connection.end();
+        models.Log.create({
+          owner: app.owner,
+          appId: appId,
+          recText: {
+            res: 'Ошибка соединения с БД. Код ошибки ',
+            user: err.code
+          },
+          category: 'database',
+          type: 'error'
+        })
       } else {
         connection.query(`SELECT * FROM apc_users222 WHERE apc_users222.userId = ${userId}`, function (err, result) {
           convertBool = (param) => param === 1 ? true : false;
@@ -162,7 +175,7 @@ router.post('/', async (req, res) => {
                 owner: app.owner,
                 appId: appId,
                 recText: {
-                  res: error.code,
+                  res: 'Ошибка отправки сообщеня на почту. Код ошибки ' + error.code + ' Email: ',
                   user: result[0].email
                 },
                 category: 'password',
@@ -183,7 +196,7 @@ router.post('/', async (req, res) => {
                     owner: app.owner,
                     appId: appId,
                     recText: {
-                      res: err,
+                      res: 'Ошибка одиночной смены пароля пользователя с id ',
                       user: userId
                     },
                     category: 'password',
@@ -200,7 +213,7 @@ router.post('/', async (req, res) => {
                     owner: app.owner,
                     appId: appId,
                     recText: {
-                      res: result.message,
+                      res: 'Успешная одиночная смена пароля пользователя с id ',
                       user: userId
                     },
                     category: 'password',
