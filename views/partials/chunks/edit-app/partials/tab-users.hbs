@@ -27,9 +27,9 @@
       </div>
       <div class="account-content-item__line_label">       
         {{#if isActive}}
-          <button class="btn btn-sm btn-success" onClick="activateSingleAPC({{id}})">Вкл</a>
+          <button class="btn btn-sm btn-success isActiveBtn" data-current-active="{{isActive}}" onClick="toggleActive({{id}}, {{isActive}})">Вкл</a>
         {{else}}
-          <button class="btn btn-sm btn-danger" onClick="disActivateSingleAPC({{id}}">Выкл</a>
+          <button class="btn btn-sm btn-danger isActiveBtn" data-current-active="{{isActive}}" onClick="toggleActive({{id}}, {{isActive}})">Выкл</a>
         {{/if}}
       </div>
     </div>

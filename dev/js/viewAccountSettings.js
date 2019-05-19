@@ -12,6 +12,40 @@ $(function () {
     });
 });
 
+function toggleActive (userId, currentActive) {
+    var appId = $('.appIdSingleApp').attr('data-appId');
+    var userId = userId;
+    var currentActive = currentActive;
+
+    var data = {
+        appId: appId,
+        userId: userId,
+        currentIsActive: currentActive
+    }
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/apc/single/toggleActive',
+        beforeSend: function(){
+            $('.isActiveBtn').append(loader);
+        },
+        complete: function(){
+            $('.isActiveBtn').find('svg').remove();
+        }
+    }).done(function (data) {
+        if (!data.ok) {
+            $('.alert-content').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">'+data.error+'<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
+        } else {
+            $('.alert-content').append('<div class="alert alert-success alert-dismissible fade show" role="alert">'+data.msg+'. Через 5 секунд страница будет перезагружена<button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> </div>');
+            setTimeout(function(){ location.reload(); }, 5000);
+        }
+    });
+
+    console.log(data)
+};
+
 function updateAPCUsers() {
     var appId = $('.appIdSingleApp').attr('data-appId');
     console.log(appId)

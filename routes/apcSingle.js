@@ -9,6 +9,94 @@ const key = new NodeRSA(config.PRIVATE_KEY);
 const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt-nodejs')
 
+router.post('/toggleActive', async (req, res) => {
+  const appId = req.body.appId.trim();
+  const userId = req.body.userId;
+  const getCurrentIsActive = req.body.currentIsActive;
+  const newCurrentisActive = getCurrentIsActive === 0 ? 1 : 0
+
+  const mainApp = await models.App.findOne({
+    _id: appId
+  })
+
+  const app = {
+    owner: mainApp.owner,
+    domain: key.decrypt(mainApp.domain, 'utf8'),
+    dbHost: key.decrypt(mainApp.dbHost, 'utf8'),
+    dbName: key.decrypt(mainApp.dbName, 'utf8'),
+    dbUser: key.decrypt(mainApp.dbUser, 'utf8'),
+    dbPassword: key.decrypt(mainApp.dbPassword, 'utf8'),
+    dbTable: key.decrypt(mainApp.dbTable, 'utf8')
+  }
+
+  return new Promise(async (resolve, reject) => {
+    let connection = mysql.createConnection({
+      host: app.dbHost,
+      user: app.dbUser,
+      password: app.dbPassword,
+      tableName: app.dbTable,
+      database: app.dbName,
+      port: app.dbPort
+    });
+    await connection.connect(function (err) {
+      if (err) {
+        reject(err.code)
+        connection.end();
+        models.Log.create({
+          owner: app.owner,
+          appId: appId,
+          recText: {
+            res: 'Ошибка соединения с БД. Код ошибки ',
+            user: err.code
+          },
+          category: 'database',
+          type: 'error'
+        })
+      } else {
+        connection.query(`UPDATE apc_users222 SET isActive = ${newCurrentisActive} WHERE apc_users222.id = ${userId}`, function (err, result) {
+          if (err) {
+            console.log(err)
+            res.json({
+              ok: false,
+              msg: 'Не удалось переключить функцию APC пользователю с id ' + userId
+            })
+            
+            // Write succes to log
+            models.Log.create({
+              owner: app.owner,
+              appId: appId,
+              recText: {
+                res: 'Не удалось переключить функцию APC пользователю c id ' + userId,
+                user: userId
+              },
+              category: 'APC',
+              type: 'error'
+            })
+          } else {
+            res.json({
+              ok: true,
+              msg: 'Функция APC успешно переключена для пользователя с id ' + userId
+            })
+
+            // Write succes to log
+            models.Log.create({
+              owner: app.owner,
+              appId: appId,
+              recText: {
+                res: 'Функция APC успешно переключена для пользователя с id ' + userId,
+                user: userId
+              },
+              category: 'password',
+              type: 'success'
+            })
+          }
+        })
+      };
+    });
+  })
+
+})
+
 router.post('/loadUsers', async (req, res) => {
 
   const appId = req.body.appId.trim();
