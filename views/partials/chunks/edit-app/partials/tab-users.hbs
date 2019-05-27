@@ -9,6 +9,7 @@
     <div class="account-content-item__line_label">User login</div>
     <div class="account-content-item__line_label">Изменить пароль</div>
     <div class="account-content-item__line_label">Статус APC</div>
+    <div class="account-content-item__line_label">Настройки</div>
   </div>  
 </div>
 {{#each app}}
@@ -18,19 +19,95 @@
     <div class="account-content-item__line d-flex justify-content-between">
       <div class="account-content-item__line_label">{{userId}}</div>
       <div class="account-content-item__line_label">{{username}}</div>
-      <div class="account-content-item__line_actions d-flex justify-content-between">
+      <div class="account-content-item__line_actions d-flex justify-content-center">
         <button class="btn btn-sm btnChangeSingeApc" onClick="changeUserPassword({{userId}})">
             <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-arrow-reload">
               <use xlink:href="../../img/svg/sprite.svg#si-glyph-arrow-reload" />
             </svg>
-        </a>
+        </button>
       </div>
-      <div class="account-content-item__line_label">       
+      <div class="account-content-item__line_label d-flex justify-content-center">       
         {{#if isActive}}
           <button class="btn btn-sm btn-success isActiveBtn" data-current-active="{{isActive}}" onClick="toggleActive({{id}}, {{isActive}})">Вкл</a>
         {{else}}
           <button class="btn btn-sm btn-danger isActiveBtn" data-current-active="{{isActive}}" onClick="toggleActive({{id}}, {{isActive}})">Выкл</a>
         {{/if}}
+      </div>
+      <div class="account-content-item__line_actions d-flex justify-content-center">
+        <div class="dropleft">
+          <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" class="si-glyph-spanner">
+              <use xlink:href="../../img/svg/sprite.svg#si-glyph-spanner" />
+            </svg>
+          </button>
+          <div class="dropdown-menu">
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Длина пароля</span>
+              <span class="drop-menu_line_value">
+                <input class="form-control" type="text" value="{{length}}">
+              </span>
+            </div>
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Использовать цифры</span>
+              <span class="drop-menu_line_value">
+                <div class="flipswitch">
+                    <input type="checkbox" data-value="{{numbers}}" name="numbers_flipswitch" class="flipswitch-cb" id="fs">
+                    <label class="flipswitch-label" for="fs">
+                        <div class="flipswitch-inner"></div>
+                        <div class="flipswitch-switch"></div>
+                    </label>
+                </div>
+              </span>
+            </div>
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Использовать спец. символы (!/_.)</span>
+              <span class="drop-menu_line_value">
+                <div class="flipswitch">
+                    <input type="checkbox" data-value="{{symbols}}" name="special_flipswitch" class="flipswitch-cb" id="fs">
+                    <label class="flipswitch-label" for="fs">
+                        <div class="flipswitch-inner"></div>
+                        <div class="flipswitch-switch"></div>
+                    </label>
+                </div>
+              </span>
+            </div>
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Использовать заглавные символы</span>
+              <span class="drop-menu_line_value">
+                <div class="flipswitch">
+                    <input type="checkbox" data-value="{{uppercase}}" name="big-letters_flipswitch" class="flipswitch-cb" id="fs">
+                    <label class="flipswitch-label" for="fs">
+                        <div class="flipswitch-inner"></div>
+                        <div class="flipswitch-switch"></div>
+                    </label>
+                </div>
+              </span>
+            </div>
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Исключать похожие символы</span>
+              <span class="drop-menu_line_value">
+                <div class="flipswitch">
+                    <input type="checkbox" data-value="{{excludeSimilarCharacters}}" ="deplicate_flipswitch" class="flipswitch-cb" id="fs">
+                    <label class="flipswitch-label" for="fs">
+                        <div class="flipswitch-inner"></div>
+                        <div class="flipswitch-switch"></div>
+                    </label>
+                </div>
+              </span>
+            </div>
+            <div class="drop-menu_line">
+              <span class="drop-menu_line_name">Исключить из пароля символы</span>
+              <span class="drop-menu_line_value">
+                <span class="drop-menu_line_value">
+                  <input class="form-control" type="text" value="">
+                </span>
+              </span>
+            </div>
+            <div class="btn-save-settings">
+              <button type="button" class="btn btn-success">Сохранить</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

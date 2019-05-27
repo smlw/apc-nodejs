@@ -12,6 +12,26 @@ $(function () {
     });
 });
 
+$( document ).ready(function() {
+    $(function () {
+        var value = $('.flipswitch')
+        
+        value.each(function (el) {
+            var checkbox = $(this).find('input[type=checkbox]')
+            var attr = checkbox.attr('data-value')
+
+            // checkbox.attr('disabled', 'disabled')
+
+            if (attr === '1') {
+                checkbox.attr('checked', 'checked')
+            } else {
+                checkbox.attr('disabled', 'disabled')
+            }
+        })
+
+    })
+})
+
 function toggleActive (userId, currentActive) {
     var appId = $('.appIdSingleApp').attr('data-appId');
     var userId = userId;
